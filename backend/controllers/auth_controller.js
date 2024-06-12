@@ -13,14 +13,12 @@ cloudinary.config({
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const image = req.file;
-    console.log(image);
+    const image = req.file.path;
 
     // Upload image to Cloudinary
     const result = await cloudinary.uploader.upload(image);
     const imageUrl = result.secure_url;
 
-    console.log(imageUrl, "imageUrl");
     // If user exist already
     const existingUser = await User.findOne({ email });
     if (existingUser) {
