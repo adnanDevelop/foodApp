@@ -56,7 +56,8 @@ const register = async (req, res) => {
     return res.status(200).json({
       status: 200,
       data: user,
-      message: "User created successfully",
+      message: "User registered successfully",
+      token: await user.generateAuthToken(),
     });
   } catch (error) {
     console.error("Error while registering user", error);
@@ -119,10 +120,29 @@ const login = async (req, res) => {
     return res.status(200).json({
       status: 200,
       message: "User logged in successfully",
+      token: await user.generateAuthToken(),
     });
   } catch (error) {
     return res.status(400).json({ message: error.message, status: 400 });
   }
 };
 
-export { register, login };
+const getUserData = async (req, res) => {
+  try {
+    const user = await User.find({});
+
+    return res.status(200).json({
+      status: 200,
+      data: user,
+      message: "Data retrieved successfully",
+    });
+  } catch (error) {
+    console.log("Error while getting data", error);
+    return res.status(200).json({
+      status: 400,
+      message: "Error while getting data",
+    });
+  }
+};
+
+export { register, login, getUserData };

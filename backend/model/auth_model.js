@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
-import jsonwebtoken from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 const authSchema = new Schema(
   {
@@ -35,12 +35,17 @@ authSchema.pre("save", async function (next) {
   }
 });
 
-authSchema.methods.generateToken = async function () {
+authSchema.methods.generateAuthToken = async function () {
   try {
     const user = this;
-    const token = await jsonwebtoken.sign({ userId: user._id });
+    const token = jwt.sign(
+      { _id: user._id, name: user.name, email: user.email },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1d" }
+    );
+    return token;
   } catch (error) {
-    console.log("Error while generating token", error);
+    console.log("Error while generating the token", error);
   }
 };
 
