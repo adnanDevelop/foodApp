@@ -6,17 +6,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#00ADB5",
-        "light-green": "#18B29633",
-        yellow: "#FFB800",
-        "light-yellow": "#FFB80033",
-        pink: "#FF6A6D",
-        "light-pink": "#FF6A6D33",
-        "dark-color": "#343A40",
-        "light-gray": "#343A4080",
-        "light-color": "#868E96",
-        "light-white": "#F5F5F5",
-        "border-color": "#ADB5BD",
+        white: "#fff",
+        "light-white": "#F9F9F9",
+        black: "#000",
+        "heading-color": "#3D3D3D",
+        "content-color": "#747474",
+        yellow: "#F2A93E",
+        orange: "#F07054",
       },
       fontFamily: {
         Roboto: ["Roboto", "sans-serif"],
@@ -35,15 +31,14 @@ export default {
     themes: [
       {
         mytheme: {
-          primary: "#00ADB5",
-          yellow: "#FFB800",
-          "light-yellow": "#FFB80033",
-          pink: "#FF6A6D",
-          "light-pink": "#FF6A6D33",
-          "light-gray": "#343A4080",
-          "dark-color": "#343A40",
-          "light-color": "#868E96",
-          "light-white": "#F5F5F5",
+          white: "#fff",
+          "light-white": "#F9F9F9",
+          black: "#000",
+          "heading-color": "#3D3D3D",
+          "content-color": "#747474",
+          yellow: "#F2A93E",
+          orange: "#F07054",
+          warning: "#F2A93E",
         },
       },
     ],

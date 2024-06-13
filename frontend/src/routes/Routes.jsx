@@ -53,7 +53,6 @@ export const Routes = () => {
       ],
     },
     {
-      path: "/login",
       element: (
         <PublicRoute>
           <Outlet />
@@ -61,7 +60,7 @@ export const Routes = () => {
       ),
       children: [
         {
-          index: true,
+          path: "/login",
           element: <Login />,
         },
         {
