@@ -15,6 +15,14 @@ const register = async (req, res) => {
     const { name, email, password } = req.body;
     const image = req.file.path;
 
+    console.log(image);
+
+    if (!image) {
+      return res
+        .status(400)
+        .json({ message: "No image uploaded", status: 400 });
+    }
+
     // Upload image to Cloudinary
     const result = await cloudinary.uploader.upload(image);
     const imageUrl = result.secure_url;
@@ -120,6 +128,7 @@ const login = async (req, res) => {
     return res.status(200).json({
       status: 200,
       message: "User logged in successfully",
+      userId: user._id.toString(),
       token: await user.generateAuthToken(),
     });
   } catch (error) {

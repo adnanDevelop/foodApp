@@ -7,6 +7,8 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 
+import { useRegisterMutation } from "../../redux/services/authApi";
+
 const Signup = () => {
   const {
     register,
@@ -14,8 +16,24 @@ const Signup = () => {
     // formState: { errors },
   } = useForm();
 
+  const [registerUser] = useRegisterMutation();
+
   const submitData = async (data) => {
-    console.log(data);
+    try {
+      const formData = new FormData();
+      formData.append("image", data.image[0]);
+
+      const sentData = await registerUser({
+        ...data,
+        image: formData,
+      });
+
+      console.log(sentData);
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log(data.image[0]);
   };
 
   return (
@@ -50,19 +68,6 @@ const Signup = () => {
               {...register("email", { required: true })}
             />
           </div>
-          {/* Phone Number  */}
-          <div className="w-full h-[50px] bg-light-white flex mb-5 rounded-md overflow-hidden">
-            <span className="flex-none h-[50px] flex items-center justify-center w-[45px] text-2xl text-content-color">
-              <FaPhoneAlt />
-            </span>
-            <input
-              type="text"
-              name="number"
-              className="flex-1 w-full h-[50px] bg-light-white focus:outline-none text-sm px-1 text-content-color"
-              placeholder="Number..."
-              {...register("number", { required: true })}
-            />
-          </div>
 
           {/* Password */}
           <div className="w-full h-[50px] bg-light-white rounded-md overflow-hidden flex mb-3">
@@ -75,6 +80,13 @@ const Signup = () => {
               placeholder="Password..."
               name="password"
               {...register("password", { required: true })}
+            />
+          </div>
+          <div className="image_option">
+            <input
+              type="file"
+              {...register("image", { required: true })}
+              name="image"
             />
           </div>
 
