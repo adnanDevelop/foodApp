@@ -15,8 +15,6 @@ const register = async (req, res) => {
     const { name, email, password } = req.body;
     const image = req.file.path;
 
-    console.log(image);
-
     if (!image) {
       return res
         .status(400)

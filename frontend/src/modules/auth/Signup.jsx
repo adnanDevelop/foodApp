@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 // Icons
 import { FaRegUser } from "react-icons/fa";
-import { FaPhoneAlt } from "react-icons/fa";
+// import { FaPhoneAlt } from "react-icons/fa";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 
@@ -21,19 +21,21 @@ const Signup = () => {
   const submitData = async (data) => {
     try {
       const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
       formData.append("image", data.image[0]);
 
-      const sentData = await registerUser({
-        ...data,
-        image: formData,
-      });
+      const sentData = await registerUser(formData)
+        .unwrap()
+        .then((response) => console.log(response));
 
       console.log(sentData);
     } catch (err) {
       console.log(err);
     }
 
-    console.log(data.image[0]);
+    // console.log(data);
   };
 
   return (
@@ -85,8 +87,12 @@ const Signup = () => {
           <div className="image_option">
             <input
               type="file"
-              {...register("image", { required: true })}
               name="image"
+              {...register("image", { required: true })}
+              // onChange={(e) => {
+              //   setValue("image", e.target.files[0]);
+              //   setStoreImage(e.target.files[0]);
+              // }}
             />
           </div>
 
