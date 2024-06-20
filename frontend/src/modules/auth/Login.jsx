@@ -15,11 +15,7 @@ const Login = () => {
   console.log("token saved", token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const [loginUser] = useLoginMutation();
 
