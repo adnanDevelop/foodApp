@@ -1,37 +1,39 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/features/authSlice";
 
 // Apis
-import {
-  useGetUserQuery,
-  useLoginMutation,
-} from "../../redux/services/authApi";
+import { useLoginMutation } from "../../redux/services/authApi";
 
 // Icons
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 
 const Login = () => {
+  const { token } = useSelector((state) => state.auth);
+  console.log("token saved", token);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     // formState: { errors },
   } = useForm();
 
-  const [login] = useLoginMutation();
-  const { data: getData } = useGetUserQuery({});
-  console.log(getData);
+  const [loginUser] = useLoginMutation();
 
   const submitData = async (data) => {
-    await login(data)
+    await loginUser(data)
       .unwrap()
-      .then(() => {
+      .then((value) => {
         alert("login successfully");
+        dispatch(login(value.token));
         navigate("/");
+        console.log(value);
       })
-      .catch(() => {
-        alert("Error while logining");
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -70,7 +72,7 @@ const Login = () => {
           {/* Submit button  */}
           <div className="mt-5">
             <button type="submit" className="w-full btn-primary">
-              Continue
+              Sign In
             </button>
             <p className="mt-2 text-sm text-center">
               Or{" "}

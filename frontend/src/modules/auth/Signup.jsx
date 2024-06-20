@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 // Icons
@@ -10,6 +10,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { useRegisterMutation } from "../../redux/services/authApi";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -26,22 +27,20 @@ const Signup = () => {
       formData.append("password", data.password);
       formData.append("image", data.image[0]);
 
-      const sentData = await registerUser(formData)
+      const response = await registerUser(formData)
         .unwrap()
-        .then((response) => console.log(response));
-
-      console.log(sentData);
+        .then(() => {
+          navigate("/login");
+        });
     } catch (err) {
       console.log(err);
     }
-
-    // console.log(data);
   };
 
   return (
     <main className="w-full h-screen grid place-items-center bg-[url('/image/home-bg.jpg')] bg-cover bg-center bg-no-repeat px-4">
       <section className="max-w-[450px] w-full flex items-center justify-center flex-col  bg-white py-[30px] px-[20px] rounded-2xl shadow-lg">
-        <h2 className="text-center text-heading-color">Sign In</h2>
+        <h2 className="text-center text-heading-color">Sign Up</h2>
         <form className="w-full mt-6" onSubmit={handleSubmit(submitData)}>
           {/* Name  */}
           <div className="w-full h-[50px] bg-light-white flex mb-5 rounded-md overflow-hidden">
@@ -89,17 +88,13 @@ const Signup = () => {
               type="file"
               name="image"
               {...register("image", { required: true })}
-              // onChange={(e) => {
-              //   setValue("image", e.target.files[0]);
-              //   setStoreImage(e.target.files[0]);
-              // }}
             />
           </div>
 
           {/* Submit button  */}
           <div className="mt-5">
             <button type="submit" className="w-full btn-primary">
-              Continue
+              Sign Up
             </button>
             <p className="mt-2 text-sm text-center">
               <Link to="/login" className=" text-yellow">

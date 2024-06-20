@@ -104,7 +104,7 @@ const login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
-        message: "User not found",
+        message: "Invalid credentials",
         status: 400,
       });
     }
@@ -134,6 +134,7 @@ const login = async (req, res) => {
   }
 };
 
+// Get User Data
 const getUserData = async (req, res) => {
   try {
     const user = await User.find({});
