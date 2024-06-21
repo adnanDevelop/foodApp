@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/features/authSlice";
+import { storeToken } from "../../redux/features/authSlice";
 
 // Apis
 import { useLoginMutation } from "../../redux/services/authApi";
@@ -24,7 +24,7 @@ const Login = () => {
       .unwrap()
       .then((value) => {
         alert("login successfully");
-        dispatch(login(value.token));
+        dispatch(storeToken(value.token));
         navigate("/");
         console.log(value);
       })
