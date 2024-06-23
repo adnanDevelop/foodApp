@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../model/auth_model.js";
 
 const verifyToken = async (req, res, next) => {
   const token = req.header("Authorization");
@@ -10,12 +11,13 @@ const verifyToken = async (req, res, next) => {
   }
 
   const jwtToken = token.replace("Bearer", "").trim();
-  console.log(jwtToken);
 
   try {
     const verifyUser = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
+    const loggedInUser = await User.findById(verifyUser._id); // Get loggedin user data
+
     res.status(200).json({
-      data: verifyUser,
+      user: loggedInUser,
     });
     next();
   } catch (error) {
