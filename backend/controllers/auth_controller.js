@@ -130,4 +130,25 @@ const getUserData = async (req, res) => {
   }
 };
 
-export { register, login, getUserData };
+// Get Loged in user data
+const getUser = async (req, res) => {
+  // try {
+  //   const token = req.headers.authorization;
+  //   if (!token) {
+  //     return res.status(401).json({
+  //       message: "Unauthorized HTTP, Token not provided ",
+  //     });
+  //   }
+  //   return res.status(200).json({
+  //     message: "Data retrieved successfully",
+  //     token,
+  //   });
+  // } catch (error) {
+  //   console.log("Error in logged in user route", error);
+  //   return res.status(400).json({
+  //     message: "Error in logged in user route",
+  //   });
+  // }
+};
+
+export { register, login, getUserData, getUser };

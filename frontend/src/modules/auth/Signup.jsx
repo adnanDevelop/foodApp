@@ -5,15 +5,12 @@ import { storeToken } from "../../redux/features/authSlice";
 
 // Icons
 import { FaRegUser } from "react-icons/fa";
-// import { FaPhoneAlt } from "react-icons/fa";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 
 import { useRegisterMutation } from "../../redux/services/authApi";
-import { useState } from "react";
 
 const Signup = () => {
-  const [error, storeError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,15 +30,17 @@ const Signup = () => {
       formData.append("password", data.password);
       formData.append("image", data.image[0]);
 
-      const response = await registerUser(formData)
+      await registerUser(formData)
         .unwrap()
         .then((value) => {
           navigate("/login");
           dispatch(storeToken(value.token));
           navigate("/");
           console.log(value.data.message);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      storeError(response.data.message);
     } catch (err) {
       console.log(err);
     }

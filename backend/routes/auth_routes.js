@@ -4,7 +4,9 @@ import {
   register,
   login,
   getUserData,
+  getUser,
 } from "../controllers/auth_controller.js";
+import verifyToken from "../middlewares/VerifyToken.js";
 const router = Router();
 
 const storage = multer.diskStorage({
@@ -20,5 +22,6 @@ const upload = multer({ storage: storage });
 router.post("/register", upload.single("image"), register);
 router.post("/login", login);
 router.get("/get-data", getUserData);
+router.get("/user", verifyToken, getUser);
 
 export default router;
