@@ -16,7 +16,7 @@ const register = async (req, res) => {
     const image = req.file.path;
 
     if (!image) {
-      return res.status(400).json({ message: "No image uploaded" });
+      return res.status(400).json({ message: "Please select image" });
     }
 
     // Upload image to Cloudinary
@@ -57,7 +57,7 @@ const register = async (req, res) => {
     });
   } catch (error) {
     console.error("Error while registering user", error);
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: "Error while registering user" });
   }
 };
 
@@ -68,19 +68,17 @@ const login = async (req, res) => {
 
     // If user email or password is missing
     if (!email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+      res.status(400).json({ message: "All fields are required" });
     }
 
     //  If email is invalid
     if (!/\S+@\S+\.\S+/.test(email)) {
-      return res
-        .status(400)
-        .json({ message: "Please add a valid email address" });
+      res.status(400).json({ message: "Please add a valid email address" });
     }
 
     // If password is too short
     if (password.length < 8) {
-      return res
+      res
         .status(400)
         .json({ message: "Password must be at least 8 characters long" });
     }
@@ -88,28 +86,28 @@ const login = async (req, res) => {
     // If user doesn't exist
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      res.status(400).json({ message: "Invalid credentials" });
     }
 
     // if email is incorrect
     if (email !== user.email) {
-      return res.status(400).json({ message: "Invalid email address" });
+      res.status(400).json({ message: "Invalid email address" });
     }
 
     // If password is incorrect
     const matchPassword = await bcrypt.compare(password, user.password);
     if (!matchPassword) {
-      return res.status(400).json({ message: "Invalid password" });
+      res.status(400).json({ message: "Invalid password" });
+    } else {
+      // If user logged in successfully
+      return res.status(200).json({
+        message: "logged in successfully",
+        userId: user._id.toString(),
+        token: await user.generateAuthToken(),
+      });
     }
-
-    // If user logged in successfully
-    return res.status(200).json({
-      message: "logged in successfully",
-      userId: user._id.toString(),
-      token: await user.generateAuthToken(),
-    });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    res.status(400).json({ message: "Error while login user" });
   }
 };
 
@@ -131,24 +129,6 @@ const getUserData = async (req, res) => {
 };
 
 // Get Loged in user data
-const getUser = async (req, res) => {
-  // try {
-  //   const token = req.headers.authorization;
-  //   if (!token) {
-  //     return res.status(401).json({
-  //       message: "Unauthorized HTTP, Token not provided ",
-  //     });
-  //   }
-  //   return res.status(200).json({
-  //     message: "Data retrieved successfully",
-  //     token,
-  //   });
-  // } catch (error) {
-  //   console.log("Error in logged in user route", error);
-  //   return res.status(400).json({
-  //     message: "Error in logged in user route",
-  //   });
-  // }
-};
+const getUser = async (req, res) => {};
 
 export { register, login, getUserData, getUser };

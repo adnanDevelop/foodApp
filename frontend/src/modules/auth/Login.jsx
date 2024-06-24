@@ -16,62 +16,85 @@ const Login = () => {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
+  // Login API
   const [loginUser] = useLoginMutation();
 
   const submitData = async (data) => {
     setLoading(true);
     try {
-      await loginUser(data)
-        .unwrap()
-        .then((response) => {
-          toast.success(response.message);
-          dispatch(storeToken(response.token));
-          navigate("/");
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
-        });
-    } catch (e) {
-      toast.error(e.data?.message);
-      console.log(e.data);
+      const response = await loginUser(data).unwrap();
+      toast.success(response.message);
+      dispatch(storeToken(response.token));
+      navigate("/");
+    } catch (error) {
+      toast.error(error?.data?.message);
+      console.error("Login Error:", error);
+    } finally {
       setLoading(false);
     }
   };
 
   return (
     <main className="w-full h-screen grid place-items-center bg-[url('/image/home-bg.jpg')] bg-cover bg-center bg-no-repeat px-4">
-      <section className="max-w-[450px] w-full h-[380px] flex items-center justify-center flex-col  bg-white py-[30px] px-[20px] rounded-2xl shadow-lg">
+      <section className="max-w-[450px] w-full min-h-[380px]  flex items-center justify-center flex-col  bg-white p-[20px]  rounded-2xl shadow-lg">
         <h2 className="text-center text-heading-color">Sign In</h2>
         <form className="w-full mt-6" onSubmit={handleSubmit(submitData)}>
-          <div className="w-full h-[50px] bg-light-white flex mb-5 rounded-md overflow-hidden">
-            <span className="flex-none h-[50px] flex items-center justify-center w-[45px] text-2xl text-content-color">
-              <MdMarkEmailUnread />
-            </span>
-            <input
-              type="text"
-              name=" email"
-              className="flex-1 w-full h-[50px] bg-light-white focus:outline-none text-sm px-1 text-content-color"
-              placeholder="Email..."
-              {...register("email", { required: true })}
-            />
+          <div className="mb-6">
+            <div className="w-full h-[50px] bg-light-white flex  rounded-md overflow-hidden">
+              <span className="flex-none h-[50px] flex items-center justify-center w-[45px] text-2xl text-content-color">
+                <MdMarkEmailUnread />
+              </span>
+              <input
+                type="text"
+                name=" email"
+                className="flex-1 w-full h-[50px] bg-light-white focus:outline-none text-sm px-1 text-content-color"
+                placeholder="Email..."
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: "Invalid email address",
+                  },
+                })}
+              />
+            </div>
+            {errors.email && (
+              <p className="block mt-1.5 text-xs text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Password */}
-          <div className="w-full h-[50px] bg-light-white rounded-md overflow-hidden flex mb-3">
-            <span className="flex-none h-[50px] flex items-center justify-center w-[45px] text-2xl text-content-color">
-              <RiLockPasswordLine />
-            </span>
-            <input
-              type="text"
-              className="flex-1 w-full h-[50px] bg-light-white focus:outline-none text-sm px-1 text-content-color"
-              placeholder="Password..."
-              name="password"
-              {...register("password", { required: true })}
-            />
+          <div className="mb-6">
+            <div className="w-full h-[50px] bg-light-white rounded-md overflow-hidden flex  mt-4">
+              <span className="flex-none h-[50px] flex items-center justify-center w-[45px] text-2xl text-content-color">
+                <RiLockPasswordLine />
+              </span>
+              <input
+                type="text"
+                className="flex-1 w-full h-[50px] bg-light-white focus:outline-none text-sm px-1 text-content-color"
+                placeholder="Password..."
+                name="password"
+                {...register("password", {
+                  pattern: {
+                    message: "Password  must  be at least 8 characters long",
+                  },
+                  required: "Password is required",
+                })}
+              />
+            </div>
+            {errors.password && (
+              <p className="block text-xs text-red-500 mt-1.5">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Submit button  */}

@@ -5,12 +5,12 @@ import cors from "cors";
 const app = express();
 import dbConnect from "./db/db.js";
 import authRoutes from "./routes/auth_routes.js";
-import errorMessage from "./middlewares/errorMiddleware.js";
+// import errorMessage from "./middlewares/errorMiddleware.js";
 
 app.use(express.json());
 app.use(cors());
 app.use("/auth/api", authRoutes);
-app.use(errorMessage);
+// app.use(errorMessage);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
