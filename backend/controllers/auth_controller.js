@@ -104,7 +104,7 @@ const login = async (req, res) => {
 
     // If user logged in successfully
     return res.status(200).json({
-      message: "User logged in successfully",
+      message: "logged in successfully",
       userId: user._id.toString(),
       token: await user.generateAuthToken(),
     });

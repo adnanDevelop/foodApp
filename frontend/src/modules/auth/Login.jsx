@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { storeToken } from "../../redux/features/authSlice";
+import { toast } from "react-toastify";
 
 // Apis
 import { useLoginMutation } from "../../redux/services/authApi";
@@ -9,10 +10,10 @@ import { useLoginMutation } from "../../redux/services/authApi";
 // Icons
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { useState } from "react";
 
 const Login = () => {
-  const { token } = useSelector((state) => state.auth);
-  console.log("token saved", token);
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
@@ -20,17 +21,25 @@ const Login = () => {
   const [loginUser] = useLoginMutation();
 
   const submitData = async (data) => {
-    await loginUser(data)
-      .unwrap()
-      .then((value) => {
-        alert("login successfully");
-        dispatch(storeToken(value.token));
-        navigate("/");
-        console.log(value);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    setLoading(true);
+    try {
+      await loginUser(data)
+        .unwrap()
+        .then((response) => {
+          toast.success(response.message);
+          dispatch(storeToken(response.token));
+          navigate("/");
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+        });
+    } catch (e) {
+      toast.error(e.data?.message);
+      console.log(e.data);
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,7 +77,11 @@ const Login = () => {
           {/* Submit button  */}
           <div className="mt-5">
             <button type="submit" className="w-full btn-primary">
-              Sign In
+              {isLoading ? (
+                <span className="loading loading-spinner loading-md"></span>
+              ) : (
+                "Sign In"
+              )}
             </button>
             <p className="mt-2 text-sm text-center">
               Or{" "}
