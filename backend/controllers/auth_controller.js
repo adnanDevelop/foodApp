@@ -104,6 +104,7 @@ const login = async (req, res) => {
         message: "logged in successfully",
         userId: user._id.toString(),
         token: await user.generateAuthToken(),
+        status_code: 200,
       });
     }
   } catch (error) {
@@ -111,14 +112,91 @@ const login = async (req, res) => {
   }
 };
 
-// Get User Data
+// Update user profile
+const updateUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const image = req.file.path;
+
+    // Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload(image);
+    const imageUrl = result.secure_url;
+
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    // Update user in database
+    const updateUser = await User.updateOne(
+      { email: email },
+      { $set: { name, email, password: hashPassword, image: imageUrl } }
+    );
+
+    // Check if updateUser operation was successful
+    if (updateUser.nModified !== 1) {
+      throw new Error("User update failed");
+    }
+
+    // Log the updated user data
+    console.log("Updated user:", { name, email, password, image: imageUrl });
+
+    // Send success response to client
+    return res.status(200).json({
+      message: "User updated successfully",
+      data: updateUser,
+      status_code: 200,
+    });
+  } catch (error) {
+    console.log("Error while updating user:", error);
+    return res.status(400).json({
+      message: "Error while updating user",
+      error: error.message,
+    });
+  }
+};
+
+// Delete User
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.query;
+    // Check if user exist before deletion
+    const isUserExist = await User.findOne({ _id: id });
+    if (!isUserExist) {
+      return res.status(400).json({
+        message: "User doesn't exist",
+        status_code: 400,
+      });
+    }
+
+    // // Delete user from database
+    const deleteUser = await User.deleteOne({ _id: id });
+
+    // Check if deleteUser operation was successful
+    if (deleteUser.deletedCount !== 1) {
+      throw new Error("User deletion failed");
+    }
+
+    return res.status(200).json({
+      message: "User deleted successfully",
+      status_code: 200,
+    });
+  } catch (error) {
+    console.log("Error while deleting user:", error);
+    res.status(400).json({
+      message: "Error while deleting user",
+      status_code: 400,
+    });
+  }
+};
+
+// Get User Data just for testing purpose
 const getUserData = async (req, res) => {
   try {
     const user = await User.find({});
 
     return res.status(200).json({
       message: "Data retrieved successfully",
-      user,
+      data: user,
+      page_info: { limit: req.query.limit, page: req.query.page },
+      status_code: 200,
     });
   } catch (error) {
     console.log("Error while getting data", error);
@@ -129,6 +207,13 @@ const getUserData = async (req, res) => {
 };
 
 // Get Loged in user data
-const getUser = async (req, res) => {};
+const getUser = async (req, res) => {
+  return res.status(200).json({
+    message: "Data retrieved successfully",
+    data: req.user,
+    token: req.token,
+    status_code: 200,
+  });
+};
 
-export { register, login, getUserData, getUser };
+export { register, login, updateUser, deleteUser, getUserData, getUser };

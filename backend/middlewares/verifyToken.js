@@ -14,11 +14,11 @@ const verifyToken = async (req, res, next) => {
 
   try {
     const verifyUser = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
-    const loggedInUser = await User.findById(verifyUser._id); // Get loggedin user data
+    const loggedInUser = await User.findOne({ email: verifyUser.email }); // Get loggedin user data
 
-    res.status(200).json({
-      user: loggedInUser,
-    });
+    req.user = loggedInUser;
+    req.token = jwtToken;
+
     next();
   } catch (error) {
     res.status(401).json({ message: "Unauthorized. Inavlid token" });
