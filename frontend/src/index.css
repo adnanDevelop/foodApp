@@ -40,7 +40,7 @@
     }
 
     .custom_width {
-        @apply 2xl:max-w-[1320px] xl:max-w-[1120px] lg:max-w-[990px] sm:max-w-[600px] mx-auto;
+        @apply 2xl:max-w-[1320px] xl:max-w-[1120px] lg:max-w-[990px] md:max-w-[678px] mx-auto sm:max-w-[600px] sm:px-1 px-[15px];
     }
 
     .btn-primary {
