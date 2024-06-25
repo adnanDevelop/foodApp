@@ -24,7 +24,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="realative">
+    <div className="relative">
       {/* Lg navbar */}
       <div className="absolute top-0 left-[50%] translate-x-[-50%] w-full mx-auto custom_width lg:block hidden">
         <div className="flex items-center justify-between w-full h-[100px]">
@@ -241,8 +241,11 @@ const Navbar = () => {
                 to="/cart"
                 tabIndex={0}
                 role="button"
-                className="block m-1 text-xl text-white border-r pe-3 border-r-content-color"
+                className="relative block m-1 text-xl text-white border-r pe-3 border-r-content-color"
               >
+                <p className=" w-[15px] h-[15px] flex items-center justify-center text-xs leading-none text-white rounded-full cart_item bg-yellow absolute top-[-0.5rem] right-[0.4rem]">
+                  5
+                </p>
                 <BsCartPlus />
               </Link>
             </div>
