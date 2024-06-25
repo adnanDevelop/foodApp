@@ -12,7 +12,7 @@
     }
 
     h1 {
-        @apply text-[70px] font-bold capitalize;
+        @apply lg:text-[50px] sm:text-[40px] text-[35px] font-medium capitalize;
     }
 
     h2 {
@@ -39,6 +39,10 @@
         @apply transition-all duration-300 ease-in-out;
     }
 
+    .gradient {
+        @apply bg-gradient-to-r from-yellow to-orange
+    }
+
     .custom_width {
         @apply 2xl:max-w-[1320px] xl:max-w-[1120px] lg:max-w-[990px] md:max-w-[678px] mx-auto sm:max-w-[600px] sm:px-1 px-[15px];
     }
@@ -47,8 +51,15 @@
         @apply px-5 py-2 !text-white rounded-md bg-yellow h-[50px] uppercase font-medium transition-all duration-300 ease-in-out hover:bg-black;
     }
 
+    .btn-rounded-sm {
+        @apply md:px-10 px-6 py-2 !text-white rounded-full bg-gradient-to-r from-yellow to-orange h-[50px] uppercase font-medium transition-all duration-300 ease-in-out hover:bg-black;
+    }
+
+
 
 }
+
+/* background: linear-gradient(to right, rgba(var(--theme-color), 1), rgba(var(--theme-color2), 1)); */
 
 body {
     font-family: 'Poppins', sans-serif;
