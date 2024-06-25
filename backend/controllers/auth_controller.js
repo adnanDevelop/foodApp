@@ -116,32 +116,44 @@ const login = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    const { id } = req.query;
     const image = req.file.path;
+    if (!image) {
+      return res.status(400).json({ message: "Please select image" });
+    }
 
     // Upload image to Cloudinary
     const result = await cloudinary.uploader.upload(image);
     const imageUrl = result.secure_url;
 
-    const hashPassword = await bcrypt.hash(password, 10);
+    // Hashing password
+    let hashPassword;
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: "Password must be at least 8 characters long",
+        status_code: 400,
+      });
+    } else {
+      hashPassword = await bcrypt.hash(password, 10);
+    }
+
+    // If user doesn't exist
+    const user = await User.findOne({ _id: id });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "User doesn't exist", status_code: 400 });
+    }
 
     // Update user in database
-    const updateUser = await User.updateOne(
-      { email: email },
+    await User.updateOne(
+      { _id: id },
       { $set: { name, email, password: hashPassword, image: imageUrl } }
     );
 
-    // Check if updateUser operation was successful
-    if (updateUser.nModified !== 1) {
-      throw new Error("User update failed");
-    }
-
-    // Log the updated user data
-    console.log("Updated user:", { name, email, password, image: imageUrl });
-
-    // Send success response to client
+    // Sending success response to the client
     return res.status(200).json({
       message: "User updated successfully",
-      data: updateUser,
       status_code: 200,
     });
   } catch (error) {
