@@ -9,6 +9,9 @@ import {
   deleteUser,
 } from "../controllers/auth_controller.js";
 import verifyToken from "../middlewares/verifyToken.js";
+// import validation from "../middlewares/validation.js";
+// import { loginValidation } from "../validators/auth_validators.js";
+
 const router = Router();
 
 const storage = multer.diskStorage({
