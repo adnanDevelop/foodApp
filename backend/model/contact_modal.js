@@ -11,7 +11,7 @@ const contactSchema = new Schema(
       required: true,
     },
     number: {
-      type: Number,
+      type: String,
       required: true,
     },
     email: {
