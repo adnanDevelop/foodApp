@@ -42,7 +42,7 @@ const Navbar = () => {
               <li key={link.path}>
                 <Link
                   to={link.path}
-                  className="text-white capitalize transitions hover:text-yellow"
+                  className="font-medium text-white capitalize transitions hover:text-yellow"
                 >
                   {link.name}
                 </Link>

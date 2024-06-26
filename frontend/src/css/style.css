@@ -1,0 +1,36 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+body::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+body::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #F2A93E !important;
+    border-radius: 10px !important;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #F2A93E !important;
+}
+
+/* Handle on hover */
+.Toastify__toast-container {
+    width: 340px !important;
+}
+
+.Toastify__toast-body>div:last-child {
+    font-size: 14px !important;
+
+}

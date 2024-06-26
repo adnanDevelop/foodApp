@@ -20,8 +20,13 @@ function Category() {
   ];
 
   return (
-    <main className="mx-[15px] sm:mx-0">
-      <section className="p-4 overflow-hidden bg-white rounded-lg shadow-md custom_width mt-[-80px]">
+    <main className="mx-[15px] sm:mx-0 relative">
+      <img
+        src="/image/category/category-img.png"
+        className="absolute top-[-2rem] xl:block hidden"
+        alt=""
+      />
+      <section className="px-4 overflow-hidden bg-white rounded-lg shadow-md custom_width mt-[-80px]">
         <Swiper
           slidesPerView={6}
           spaceBetween={20}
@@ -50,13 +55,13 @@ function Category() {
           {content.map((element, index) => {
             return (
               <SwiperSlide key={index}>
-                <div className="p-3 rounded-lg bg-light-white ">
+                <div className="group p-3 my-4 border rounded-lg cursor-pointer bg-light-white transitions border-light-white hover:border-[#f2aa3e8d] hover:bg-[#f2aa3e37] hover:translate-y-[-0.2rem] hover:scale-[1.04]">
                   <img
                     src={element.image}
                     className="w-[70px] h-[65px] object-cover mx-auto"
                     alt=""
                   />
-                  <h4 className="mt-1 text-lg font-medium text-center text-content-color">
+                  <h4 className="mt-1 text-lg font-medium text-center text-content-color group-hover:text-yellow transitions">
                     {element.title}
                   </h4>
                 </div>

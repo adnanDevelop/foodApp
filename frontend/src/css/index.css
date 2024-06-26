@@ -4,8 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @layer base {
     body {
         @apply !overflow-x-hidden;
@@ -44,7 +42,11 @@
     }
 
     .custom_width {
-        @apply 2xl:max-w-[1320px] xl:max-w-[1120px] lg:max-w-[990px] md:max-w-[678px] mx-auto sm:max-w-[600px] sm:px-1 px-[15px];
+        @apply 2xl:max-w-[1280px] xl:max-w-[1120px] lg:max-w-[990px] md:max-w-[678px] mx-auto sm:max-w-[600px] sm:px-1 px-[15px];
+    }
+
+    .section_padding {
+        @apply py-[80px];
     }
 
     .btn-primary {
@@ -56,22 +58,5 @@
     }
 
 
-
-}
-
-/* background: linear-gradient(to right, rgba(var(--theme-color), 1), rgba(var(--theme-color2), 1)); */
-
-body {
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
-}
-
-
-.Toastify__toast-container {
-    width: 340px !important;
-}
-
-.Toastify__toast-body>div:last-child {
-    font-size: 14px !important;
 
 }
