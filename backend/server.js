@@ -8,6 +8,7 @@ import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 // Routes file
 import authRoutes from "./routes/auth_routes.js";
+import contactRoute from "./routes/contact_route.js";
 
 app.use(express.json());
 app.use(cors());
@@ -15,6 +16,7 @@ app.use(errorMiddleware);
 
 // Routes
 app.use("/auth/api", authRoutes);
+app.use("/api", contactRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
