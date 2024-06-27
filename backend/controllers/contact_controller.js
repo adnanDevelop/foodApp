@@ -4,15 +4,15 @@ const contactForm = async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
-    if (!name || !email || !message) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
+    // if (!name || !email || !message) {
+    //   return res.status(400).json({ message: "All fields are required" });
+    // }
 
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      return res
-        .status(400)
-        .json({ message: "Please add a valid email address" });
-    }
+    // if (!/\S+@\S+\.\S+/.test(email)) {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Please add a valid email address" });
+    // }
 
     const storeFormData = await contactFormModel.create({
       name,

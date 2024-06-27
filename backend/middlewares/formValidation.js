@@ -1,13 +1,10 @@
-const formValidation = (schema) => async (req, res, next) => {
+const formValidation = (validationSchema) => async (req, res, next) => {
   try {
-    await schema.validate({
-      body: req.body,
-      query: req.query,
-      params: req.params,
-    });
+    const validateData = await validationSchema.parseAsync(req.body);
+    req.body = validateData;
     next();
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error });
   }
 };
 
