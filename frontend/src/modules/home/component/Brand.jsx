@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 // Components
 import SectionHeader from "../../../components/global/SectionHeader";
@@ -66,13 +66,13 @@ const Brand = () => {
         >
           <button
             onClick={handlePrevClick}
-            className="sm:w-[40px] w-[35px] sm:h-[40px] h-[35px] rounded-full flex items-center justify-center shadow-md border border-gray-200 bg-white text-gray-200 transition duration-300 focus:bg-sky-900 sm:text[20px] text-sm "
+            className="sm:w-[40px] w-[35px] sm:h-[40px] h-[35px] rounded-full flex items-center justify-center shadow-md border border-gray-600 bg-white text-gray-600 transition duration-300 focus:bg-yellow hover:bg-yellow hover:text-white focus:text-white hover:border-yellow focus:border-yellow sm:text[20px] text-sm "
           >
             <FaArrowLeft />
           </button>
           <button
             onClick={handleNextClick}
-            className="sm:w-[40px] w-[35px] sm:h-[40px] h-[35px] rounded-full flex items-center justify-center shadow-md border border-gray-200 bg-white text-gray-200 transition duration-300 focus:bg-sky-900 sm:text[20px] text-sm "
+            className="sm:w-[40px] w-[35px] sm:h-[40px] h-[35px] rounded-full flex items-center justify-center shadow-md border border-gray-600 bg-white text-gray-600 transition duration-300 focus:bg-yellow hover:bg-yellow hover:text-white focus:text-white hover:border-yellow focus:border-yellow sm:text[20px] text-sm "
           >
             <FaArrowRight />
           </button>

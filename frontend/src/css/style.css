@@ -3,8 +3,8 @@ body {
     overflow-x: hidden;
 }
 
-body::-webkit-scrollbar {
-    width: 8px;
+::-webkit-scrollbar {
+    display: none !important;
 }
 
 /* Track */

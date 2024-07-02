@@ -25,7 +25,7 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-[#1f1f1f]">
-      <section className="custom_width py-[60px] grid grid-cols-12 gap-4">
+      <section className="custom_width pt-[60px] grid grid-cols-12 gap-4">
         <div className="lg:col-span-4 col-span-full">
           <div className="web_detail lg:pe-4">
             <img
@@ -96,8 +96,19 @@ const Footer = () => {
           })}
         </div>
 
-          
-
+        {/* Subfooter section  */}
+        <div className="py-4 border-t-2 col-span-full border-[#E2E8FF1A]">
+          <p className="text-sm font-normal text-center text-white">
+            @ Copyright 2024 ZOMO. All rights Reserved by{" "}
+            <a
+              href="https://adnandev.netlify.app/"
+              target="_blank"
+              className="text-yellow transitionshover:font-medium"
+            >
+              Adnan Tariq
+            </a>
+          </p>
+        </div>
       </section>
     </footer>
   );
