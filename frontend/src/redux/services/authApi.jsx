@@ -18,7 +18,7 @@ const authApi = createApi({
         body: payload,
       }),
     }),
-    getUser: builder.query({
+    getAllUser: builder.query({
       query: () => ({
         url: "/get-data",
         method: "get",
@@ -27,6 +27,6 @@ const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetUserQuery } =
+export const { useLoginMutation, useRegisterMutation, useGetAllUserQuery } =
   authApi;
 export default authApi;

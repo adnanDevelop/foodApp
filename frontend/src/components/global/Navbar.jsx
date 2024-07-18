@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/features/authSlice";
 
 // Icons
 import { BsCartPlus } from "react-icons/bs";
@@ -7,8 +11,12 @@ import { IoExitOutline } from "react-icons/io5";
 import { GrClose } from "react-icons/gr";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
+
   const [open, setOpen] = useState(false);
   const [sideBar, showSideBar] = useState(false);
+  const [logeddUserData, setLoggedInUserData] = useState({});
 
   const links = [
     { path: "/", name: "Home" },
@@ -22,6 +30,28 @@ const Navbar = () => {
     setOpen(!open);
     showSideBar(!sideBar);
   };
+
+  // Get Loggedin user data
+  const getLoggedInUser = async () => {
+    try {
+      const data = await fetch("http://localhost:3000/auth/api/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const response = await data.json();
+      setLoggedInUserData({ ...response?.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getLoggedInUser();
+  }, []);
 
   return (
     <div className="relative">
@@ -79,6 +109,7 @@ const Navbar = () => {
                 </div>
               </ul>
             </div>
+
             {/* User Profile */}
             <div>
               <div className="rounded-md dropdown dropdown-bottom dropdown-end ">
@@ -88,13 +119,17 @@ const Navbar = () => {
                   className="flex items-center m-1 gap-x-2 "
                 >
                   <img
-                    src="/image/avator.png"
+                    src={`${
+                      logeddUserData
+                        ? logeddUserData?.image
+                        : "/image/avator.png"
+                    }`}
                     className="w-[40px] h-[40px] object-cover rounded-full"
                     alt=""
                   />
                   <div>
-                    <p className="text-sm font-medium leading-none text-content-color">
-                      Adnan Tariq
+                    <p className="text-sm font-medium leading-none capitalize text-content-color">
+                      {logeddUserData ? logeddUserData?.name : "User"}
                     </p>
                     <p className="text-base font-medium text-white">
                       My Account
@@ -111,7 +146,10 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link
+                      to="/profile"
+                      className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow"
+                    >
                       Profile
                     </Link>
                   </li>
@@ -130,12 +168,13 @@ const Navbar = () => {
                       Saved Cards
                     </Link>
                   </li>
-                  <Link
-                    to="/"
+                  <button
+                    type="button"
                     className="flex items-center pt-2 font-medium border-t text-yellow border-t-light-white gap-x-1"
+                    onClick={() => dispatch(logout())}
                   >
                     <IoExitOutline className="text-lg" /> Logout
-                  </Link>
+                  </button>
                 </ul>
               </div>
             </div>
@@ -249,6 +288,7 @@ const Navbar = () => {
                 <BsCartPlus />
               </Link>
             </div>
+
             {/* User Profile */}
             <div>
               <div className="rounded-md dropdown dropdown-bottom dropdown-end ">
@@ -258,13 +298,17 @@ const Navbar = () => {
                   className="flex items-center m-1 gap-x-2 "
                 >
                   <img
-                    src="/image/avator.png"
+                    src={`${
+                      logeddUserData
+                        ? logeddUserData?.image
+                        : "/image/avator.png"
+                    }`}
                     className="w-[40px] h-[40px] object-cover rounded-full"
                     alt=""
                   />
                   <div className="hidden md:block">
-                    <p className="text-sm font-medium leading-none text-content-color">
-                      Adnan Tariq
+                    <p className="text-sm font-medium leading-none capitalize text-content-color">
+                      {logeddUserData ? logeddUserData?.name : "User"}
                     </p>
                     <p className="text-base font-medium text-white">
                       My Account
@@ -273,39 +317,43 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content menu bg-base-100 rounded-xl p-4 z-[1] w-[200px]  shadow hidden md:block"
+                  className="dropdown-content menu bg-base-100 rounded-xl p-3 z-[1] w-[150px]  shadow "
                 >
                   <li>
-                    <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
                       Saved Address
                     </Link>
                   </li>
                   <li>
-                    <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link
+                      to="/profile"
+                      className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow"
+                    >
                       Profile
                     </Link>
                   </li>
                   <li>
-                    <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
                       My Orders
                     </Link>
                   </li>
                   <li>
-                    <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
                       Setting
                     </Link>
                   </li>
                   <li>
-                    <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
                       Saved Cards
                     </Link>
                   </li>
-                  <Link
-                    to="/"
-                    className="flex items-center pt-2 font-medium border-t text-yellow border-t-light-white gap-x-1"
+                  <button
+                    type="button"
+                    className="flex items-center text-xs font-medium border-t text-yellow border-t-light-white gap-x-1"
+                    onClick={() => dispatch(logout())}
                   >
                     <IoExitOutline className="text-lg" /> Logout
-                  </Link>
+                  </button>
                 </ul>
               </div>
             </div>
