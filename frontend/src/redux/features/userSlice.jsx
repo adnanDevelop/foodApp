@@ -1,4 +1,3 @@
-// src/features/user/userSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // Async thunk to fetch the logged-in user data
@@ -14,8 +13,10 @@ export const fetchLoggedInUser = createAsyncThunk(
         },
       });
       const data = await response.json();
+      console.log(data);
       return data?.data;
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }

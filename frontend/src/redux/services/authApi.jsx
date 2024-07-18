@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/auth/api" }),
+  tagTypes: ["user"],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (payload) => ({
@@ -10,6 +11,7 @@ const authApi = createApi({
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["user"],
     }),
     register: builder.mutation({
       query: (payload) => ({
@@ -21,12 +23,41 @@ const authApi = createApi({
     getAllUser: builder.query({
       query: () => ({
         url: "/get-data",
-        method: "get",
+        method: "GET",
       }),
+    }),
+    loggedInUser: () => ({
+      query: () => ({
+        url: "/get-user",
+        method: "GET",
+        Headers: {
+          Authorization: `Bearer ${localStorage.getItem("foodAppToken")}`,
+        },
+      }),
+    }),
+    getUserById: builder.query({
+      query: (id) => ({
+        url: `/get-user?id=${id}`,
+        method: "GET",
+      }),
+    }),
+    updateUser: builder.mutation({
+      query: ({ id, ...payload }) => ({
+        url: `/update-user?id=${id}`,
+        method: "PUT",
+        body: payload,
+      }),
+      tagTypes: ["user"],
     }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetAllUserQuery } =
-  authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetUserByIdQuery,
+  useGetAllUserQuery,
+  useGetLoggedInUserQuery,
+  useUpdateUserMutation,
+} = authApi;
 export default authApi;
