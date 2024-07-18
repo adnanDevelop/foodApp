@@ -32,5 +32,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 .Toastify__toast-body>div:last-child {
     font-size: 14px !important;
+}
 
+.yellow_gradient {
+    background: linear-gradient(333.77deg, #ff8d2f 9.66%, #ffd3b0 101.81%);
 }

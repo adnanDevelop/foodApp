@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
+import { fetchLoggedInUser } from "../../redux/features/userSlice";
 
 // Icons
 import { BsCartPlus } from "react-icons/bs";
@@ -13,10 +14,11 @@ import { GrClose } from "react-icons/gr";
 const Navbar = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.user.userData);
+  const userStatus = useSelector((state) => state.user.status);
 
   const [open, setOpen] = useState(false);
   const [sideBar, showSideBar] = useState(false);
-  const [logeddUserData, setLoggedInUserData] = useState({});
 
   const links = [
     { path: "/", name: "Home" },
@@ -32,26 +34,12 @@ const Navbar = () => {
   };
 
   // Get Loggedin user data
-  const getLoggedInUser = async () => {
-    try {
-      const data = await fetch("http://localhost:3000/auth/api/user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const response = await data.json();
-      setLoggedInUserData({ ...response?.data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
-    getLoggedInUser();
-  }, []);
+    if (token) {
+      dispatch(fetchLoggedInUser(token));
+    }
+  }, [token, dispatch]);
 
   return (
     <div className="relative">
@@ -119,17 +107,13 @@ const Navbar = () => {
                   className="flex items-center m-1 gap-x-2 "
                 >
                   <img
-                    src={`${
-                      logeddUserData
-                        ? logeddUserData?.image
-                        : "/image/avator.png"
-                    }`}
+                    src={`${userStatus ? user?.image : "/image/avator.png"}`}
                     className="w-[40px] h-[40px] object-cover rounded-full"
                     alt=""
                   />
                   <div>
                     <p className="text-sm font-medium leading-none capitalize text-content-color">
-                      {logeddUserData ? logeddUserData?.name : "User"}
+                      {userStatus ? user?.name : "User"}
                     </p>
                     <p className="text-base font-medium text-white">
                       My Account
@@ -147,7 +131,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      to="/profile"
+                      to="/user-profile"
                       className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow"
                     >
                       Profile
@@ -298,17 +282,13 @@ const Navbar = () => {
                   className="flex items-center m-1 gap-x-2 "
                 >
                   <img
-                    src={`${
-                      logeddUserData
-                        ? logeddUserData?.image
-                        : "/image/avator.png"
-                    }`}
+                    src={`${userStatus ? user?.image : "/image/avator.png"}`}
                     className="w-[40px] h-[40px] object-cover rounded-full"
                     alt=""
                   />
                   <div className="hidden md:block">
                     <p className="text-sm font-medium leading-none capitalize text-content-color">
-                      {logeddUserData ? logeddUserData?.name : "User"}
+                      {userStatus ? user?.name : "User"}
                     </p>
                     <p className="text-base font-medium text-white">
                       My Account
@@ -326,7 +306,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      to="/profile"
+                      to="/user-profile"
                       className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow"
                     >
                       Profile

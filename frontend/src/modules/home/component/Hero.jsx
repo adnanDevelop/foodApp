@@ -2,7 +2,7 @@
 import { IoSearch } from "react-icons/io5";
 function Hero() {
   return (
-    <main className="bg-[url('/image/home-bg.jpg')] bg-center bg-no-repeat bg-cover  w-full ">
+    <main className="bg-[url('/image/home-bg.jpg')] bg-center bg-no-repeat bg-cover w-ful">
       <section className="h-full custom_width lg:py-[100px] pt-[120px] pb-[150px] grid grid-cols-12 gap-4 items-center">
         <div className="lg:col-span-7 col-span-full">
           <h1 className="!font-semibold lg:leading-tight leading-none text-white lg:text-start text-center">
