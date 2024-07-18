@@ -17,7 +17,7 @@ const verifyToken = async (req, res, next) => {
     // Get loggedin user data
     const loggedInUser = await User.findOne(
       { email: verifyUser.email },
-      { password: 0, createdAt: 0, updatedAt: 0 }
+      { createdAt: 0, updatedAt: 0 }
     );
 
     req.user = loggedInUser;

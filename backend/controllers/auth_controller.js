@@ -68,17 +68,19 @@ const login = async (req, res) => {
 
     // If user email or password is missing
     if (!email || !password) {
-      res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     //  If email is invalid
     if (!/\S+@\S+\.\S+/.test(email)) {
-      res.status(400).json({ message: "Please add a valid email address" });
+      return res
+        .status(400)
+        .json({ message: "Please add a valid email address" });
     }
 
     // If password is too short
     if (password.length < 8) {
-      res
+      return res
         .status(400)
         .json({ message: "Password must be at least 8 characters long" });
     }
@@ -86,18 +88,18 @@ const login = async (req, res) => {
     // If user doesn't exist
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     // if email is incorrect
     if (email !== user.email) {
-      res.status(400).json({ message: "Invalid email address" });
+      return res.status(400).json({ message: "Invalid email address" });
     }
 
     // If password is incorrect
     const matchPassword = await bcrypt.compare(password, user.password);
     if (!matchPassword) {
-      res.status(400).json({ message: "Invalid password" });
+      return res.status(400).json({ message: "Invalid password" });
     } else {
       // If user logged in successfully
       return res.status(200).json({
@@ -117,14 +119,6 @@ const updateUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const { id } = req.query;
-    const image = req.file.path;
-    if (!image) {
-      return res.status(400).json({ message: "Please select image" });
-    }
-
-    // Upload image to Cloudinary
-    const result = await cloudinary.uploader.upload(image);
-    const imageUrl = result.secure_url;
 
     // Hashing password
     let hashPassword;
@@ -137,23 +131,16 @@ const updateUser = async (req, res) => {
       hashPassword = await bcrypt.hash(password, 10);
     }
 
-    // If user doesn't exist
-    const user = await User.findOne({ _id: id });
-    if (!user) {
-      return res
-        .status(400)
-        .json({ message: "User doesn't exist", status_code: 400 });
-    }
-
     // Update user in database
     await User.updateOne(
       { _id: id },
-      { $set: { name, email, password: hashPassword, image: imageUrl } }
+      { $set: { name, email, password: hashPassword } }
     );
 
     // Sending success response to the client
     return res.status(200).json({
       message: "User updated successfully",
+
       status_code: 200,
     });
   } catch (error) {
