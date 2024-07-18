@@ -9,7 +9,7 @@ const Profile = () => {
 
       <section className="grid grid-cols-12 gap-6 custom_width section_padding">
         {/* User Profile */}
-        <div className="col-span-3">
+        <div className="md:col-span-6 lg:col-span-3 col-span-full">
           <UserProfile />
         </div>
         {/* Update profile form */}

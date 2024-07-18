@@ -32,7 +32,7 @@ const UserProfile = () => {
   ];
 
   return (
-    <section className=" bg-light-white pb-[10px]">
+    <section className=" bg-light-white md:pb-[10px]">
       {/* Profile header */}
       <div className="w-full h-[150px] yellow_gradient rounded-tl-lg rounded-tr-lg relative">
         <img
@@ -51,20 +51,20 @@ const UserProfile = () => {
       </div>
 
       {/* Profile links  */}
-      <ul className="flex flex-col items-start  list-none ps-[18px] mt-[25px] w-full">
+      <ul className="flex md:flex-col flex-row overflow-y-auto items-start md:gap-1 gap-x-6  list-none ps-[18px] md:pe-0 pe-[18px] mt-[25px] w-full">
         {links.map((element, index) => {
           return element.path ? (
             <li
-              className={`flex items-center w-full py-2.5 font-normal capitalize border-r-2 border-transparent hover:border-r-yellow cursor-pointer gap-x-1.5 text-heading-color transitions hover:text-yellow group ${
+              className={`flex items-center w-full py-2.5 font-normal capitalize md:border-r-2 border-b-2 border-transparent hover:border-r-yellow cursor-pointer gap-x-1.5 text-heading-color transitions hover:text-yellow group ${
                 location.pathname === element.path &&
-                "border-r-yellow text-yellow"
+                "md:border-r-yellow border-b-yellow md:border-b-transparent text-yellow"
               }`}
               key={index}
             >
               {element.icon}
               <Link
                 to={element.path}
-                className={`text-heading-color hover:text-heading-color group-hover:text-yellow transitions ${
+                className={`text-heading-color hover:text-heading-color group-hover:text-yellow transitions text-nowrap ${
                   location.pathname === element.path && "text-yellow"
                 }`}
               >
@@ -78,7 +78,7 @@ const UserProfile = () => {
               onClick={() => dispatch(logout())}
             >
               {element.icon}
-              {element.title}
+              <span className="text-nowrap"> {element.title}</span>
             </button>
           );
         })}
