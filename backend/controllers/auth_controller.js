@@ -187,9 +187,11 @@ const deleteUser = async (req, res) => {
 };
 
 // Get User Data just for testing purpose
-const getUserData = async (req, res) => {
+const getUserById = async (req, res) => {
   try {
-    const user = await User.find({});
+    const { id } = req.body;
+
+    const user = await User.findOne({ id });
 
     return res.status(200).json({
       message: "Data retrieved successfully",
@@ -215,4 +217,4 @@ const getUser = async (req, res) => {
   });
 };
 
-export { register, login, updateUser, deleteUser, getUserData, getUser };
+export { register, login, updateUser, deleteUser, getUserById, getUser };
