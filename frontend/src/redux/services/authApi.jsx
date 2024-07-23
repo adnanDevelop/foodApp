@@ -26,15 +26,7 @@ const authApi = createApi({
         method: "GET",
       }),
     }),
-    loggedInUser: () => ({
-      query: () => ({
-        url: "/get-user",
-        method: "GET",
-        Headers: {
-          Authorization: `Bearer ${localStorage.getItem("foodAppToken")}`,
-        },
-      }),
-    }),
+
     getUserById: builder.query({
       query: (id) => ({
         url: `/get-user?id=${id}`,
@@ -57,7 +49,6 @@ export const {
   useRegisterMutation,
   useGetUserByIdQuery,
   useGetAllUserQuery,
-  useGetLoggedInUserQuery,
   useUpdateUserMutation,
 } = authApi;
 export default authApi;

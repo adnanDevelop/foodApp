@@ -2,12 +2,7 @@ import UserProfile from "./component/UserProfile";
 import UserProfileForm from "./component/UserProfileForm";
 import PageHeader from "../../components/global/PageHeader";
 
-import { useGetLoggedInUserQuery } from "../../redux/services/authApi";
-
 const Profile = () => {
-  // const { data } = useGetLoggedInUserQuery({});
-  // console.log(data);
-
   return (
     <main>
       <PageHeader title="Profile" breadCrumb="profile" />
