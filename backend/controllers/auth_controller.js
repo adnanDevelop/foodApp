@@ -49,7 +49,10 @@ const register = async (req, res) => {
     }
 
     // Creating user
-    const user = await User.create({ name, email, password, image: imageUrl });
+    const user = await User.create(
+      { name, email, password, image: imageUrl },
+      { password: 0 }
+    );
     return res.status(200).json({
       message: "User registered successfully",
       user,
@@ -186,17 +189,22 @@ const deleteUser = async (req, res) => {
   }
 };
 
-// Get User Data just for testing purpose
+// Get user data by id
 const getUserById = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.query;
 
-    const user = await User.findOne({ id });
+    const user = await User.findOne({ _id: id }, { password: 0 });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
 
     return res.status(200).json({
       message: "Data retrieved successfully",
       data: user,
-      page_info: { limit: req.query.limit, page: req.query.page },
       status_code: 200,
     });
   } catch (error) {

@@ -24,9 +24,9 @@ const upload = multer({ storage: storage });
 
 router.post("/register", upload.single("image"), register);
 router.post("/login", login);
+router.get("/user", getUserById);
 router.get("/user", verifyToken, getUser);
 router.put("/update-user", updateUser);
 router.delete("/delete-user", deleteUser);
-router.get("/get-data", getUserById);
 
 export default router;
