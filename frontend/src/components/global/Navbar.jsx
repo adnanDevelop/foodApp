@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+
+// custom hook
+import { getUser } from "../../utils/getUser";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
-import { fetchLoggedInUser } from "../../redux/features/userSlice";
 
 // Icons
 import { BsCartPlus } from "react-icons/bs";
@@ -13,9 +15,11 @@ import { GrClose } from "react-icons/gr";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
-  const user = useSelector((state) => state.user.userData);
-  const userStatus = useSelector((state) => state.user.status);
+  const userId = useSelector((state) => state?.auth.loggedInUserId);
+  const getUserData = getUser(userId);
+  const userStatus = useSelector((state) => state?.user?.status);
+
+  console.log(userId, getUserData);
 
   const [open, setOpen] = useState(false);
   const [sideBar, showSideBar] = useState(false);
@@ -34,12 +38,6 @@ const Navbar = () => {
   };
 
   // Get Loggedin user data
-
-  useEffect(() => {
-    if (token) {
-      dispatch(fetchLoggedInUser(token));
-    }
-  }, [token, dispatch]);
 
   return (
     <div className="relative">

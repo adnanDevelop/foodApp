@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLoggedInUser } from "../../../redux/features/userSlice";
+
 import { useUpdateUserMutation } from "../../../redux/services/authApi";
 
 // Icons
@@ -41,7 +41,6 @@ const UserProfileForm = () => {
       const response = await updateUser(updateData).unwrap();
       toast.success(response.message);
       reset();
-      dispatch(fetchLoggedInUser(token));
       // navigate("/");
     } catch (error) {
       toast.error(error?.data?.message);

@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/features/authSlice";
-import { fetchLoggedInUser } from "../../../redux/features/userSlice";
 
 // Icons
 import { IoIosLogOut } from "react-icons/io";
@@ -8,19 +7,11 @@ import { RiShoppingBag4Fill } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaRegUser, FaMapMarkerAlt, FaQuestionCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.user.userData);
   const userStatus = useSelector((state) => state.user.status);
-
-  useEffect(() => {
-    if (token) {
-      dispatch(fetchLoggedInUser(token));
-    }
-  }, [token, dispatch]);
 
   const links = [
     { icon: <FaRegUser />, path: "/user-profile", title: "Change Profile" },

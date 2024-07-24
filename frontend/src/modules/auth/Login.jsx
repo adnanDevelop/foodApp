@@ -14,6 +14,7 @@ import { useState } from "react";
 
 const Login = () => {
   const [isLoading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -30,7 +31,7 @@ const Login = () => {
     try {
       const response = await loginUser(data).unwrap();
       toast.success(response.message);
-      dispatch(storeToken(response.token));
+      dispatch(storeToken(response));
       navigate("/");
     } catch (error) {
       toast.error(error?.data?.message);
