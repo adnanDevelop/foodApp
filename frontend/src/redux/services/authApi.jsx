@@ -29,15 +29,17 @@ const authApi = createApi({
 
     getUserById: builder.query({
       query: (id) => ({
-        url: `/get-user?id=${id}`,
+        url: `/user`,
         method: "GET",
+        params: { id },
       }),
     }),
     updateUser: builder.mutation({
-      query: ({ id, ...payload }) => ({
-        url: `/update-user?id=${id}`,
+      query: (body, id) => ({
+        url: `/update-user`,
         method: "PUT",
-        body: payload,
+        body: body,
+        params: id,
       }),
       tagTypes: ["user"],
     }),

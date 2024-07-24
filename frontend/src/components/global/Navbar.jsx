@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { getUser } from "../../utils/getUser";
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
 
 // Icons
@@ -15,11 +15,7 @@ import { GrClose } from "react-icons/gr";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state?.auth.loggedInUserId);
-  const getUserData = getUser(userId);
-  const userStatus = useSelector((state) => state?.user?.status);
-
-  console.log(userId, getUserData);
+  const userData = getUser();
 
   const [open, setOpen] = useState(false);
   const [sideBar, showSideBar] = useState(false);
@@ -36,8 +32,6 @@ const Navbar = () => {
     setOpen(!open);
     showSideBar(!sideBar);
   };
-
-  // Get Loggedin user data
 
   return (
     <div className="relative">
@@ -105,13 +99,17 @@ const Navbar = () => {
                   className="flex items-center m-1 gap-x-2 "
                 >
                   <img
-                    src={`${userStatus ? user?.image : "/image/avator.png"}`}
+                    src={`${
+                      userData?.data
+                        ? userData?.data?.data?.image
+                        : "/image/avator.png"
+                    }`}
                     className="w-[40px] h-[40px] object-cover rounded-full"
                     alt=""
                   />
                   <div>
                     <p className="text-sm font-medium leading-none capitalize text-content-color">
-                      {userStatus ? user?.name : "User"}
+                      {userData?.data ? userData?.data?.data?.name : "User"}
                     </p>
                     <p className="text-base font-medium text-white">
                       My Account
@@ -280,13 +278,17 @@ const Navbar = () => {
                   className="flex items-center m-1 gap-x-2 "
                 >
                   <img
-                    src={`${userStatus ? user?.image : "/image/avator.png"}`}
+                    src={`${
+                      userData?.data
+                        ? userData?.data?.data?.image
+                        : "/image/avator.png"
+                    }`}
                     className="w-[40px] h-[40px] object-cover rounded-full"
                     alt=""
                   />
                   <div className="hidden md:block">
                     <p className="text-sm font-medium leading-none capitalize text-content-color">
-                      {userStatus ? user?.name : "User"}
+                      {userData?.data ? userData?.data?.data?.name : "User"}
                     </p>
                     <p className="text-base font-medium text-white">
                       My Account

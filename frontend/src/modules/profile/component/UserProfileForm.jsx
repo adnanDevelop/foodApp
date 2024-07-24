@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../../utils/getUser";
 
 import { useUpdateUserMutation } from "../../../redux/services/authApi";
 
@@ -20,24 +20,15 @@ const UserProfileForm = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
-  const user = useSelector((state) => state.user.userData);
-  const userStatus = useSelector((state) => state.user.status);
+  const userData = getUser();
 
   // Update api
   const [updateUser] = useUpdateUserMutation();
 
-  useEffect(() => {
-    if (token) {
-      dispatch(fetchLoggedInUser(token));
-    }
-  }, [token, dispatch]);
-
   const updateProfile = async (data) => {
     setLoading(true);
     try {
-      const updateData = { ...data, id: user?._id };
+      const updateData = { ...data, id: userData?.data?.data?._id };
       const response = await updateUser(updateData).unwrap();
       toast.success(response.message);
       reset();
@@ -49,8 +40,6 @@ const UserProfileForm = () => {
       setLoading(false);
     }
   };
-
-  // console.log("loaddata", user);
 
   return (
     <section className=" px-[18px] py-[30px] bg-light-white">
@@ -71,7 +60,7 @@ const UserProfileForm = () => {
           <input
             type="text"
             className="w-full h-[50px] bg-light-white focus:outline-none px-2 rounded-md text-sm"
-            placeholder={userStatus && user?.name}
+            placeholder={userData?.data && userData?.data?.data?.name}
             name="name"
             {...register("name", {
               required: "Name is required",
@@ -95,7 +84,7 @@ const UserProfileForm = () => {
           <input
             type="email"
             className="w-full h-[50px] bg-light-white focus:outline-none px-2 rounded-md text-sm"
-            placeholder={userStatus && user?.email}
+            placeholder={userData?.data && userData?.data?.data?.email}
             name="email"
             {...register("email", {
               required: "Email is required",
@@ -122,18 +111,12 @@ const UserProfileForm = () => {
           </div>
           <input
             type="password"
+            disabled
             className="w-full h-[50px] bg-light-white focus:outline-none px-2 rounded-md text-sm"
-            placeholder={userStatus && user?.password}
+            // placeholder={userStatus && user?.password}
+            placeholder={userData?.data && userData?.data?.data?.password}
             name="password"
-            {...register("password", {
-              required: "Password is required",
-            })}
           />
-          {errors.password && (
-            <p className="block mt-1.5 text-xs text-red-500">
-              {errors.password.message}
-            </p>
-          )}
         </div>
 
         {/* submit button */}

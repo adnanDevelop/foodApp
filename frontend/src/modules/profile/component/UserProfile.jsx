@@ -1,4 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+// Redux
+import { useDispatch } from "react-redux";
+import { getUser } from "../../../utils/getUser";
 import { logout } from "../../../redux/features/authSlice";
 
 // Icons
@@ -10,8 +12,7 @@ import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.userData);
-  const userStatus = useSelector((state) => state.user.status);
+  const userData = getUser();
 
   const links = [
     { icon: <FaRegUser />, path: "/user-profile", title: "Change Profile" },
@@ -27,17 +28,19 @@ const UserProfile = () => {
       {/* Profile header */}
       <div className="w-full h-[150px] yellow_gradient rounded-tl-lg rounded-tr-lg relative">
         <img
-          src={userStatus ? user?.image : "/image/avator.png"}
+          src={
+            userData?.data ? userData?.data?.data?.image : "/image/avator.png"
+          }
           className="w-[100px] rounded-full border-[5px] border-white  absolute bottom-[-50px] left-[50%] translate-x-[-50%]"
           alt=""
         />
       </div>
       <div className="mt-[55px] flex items-center justify-center flex-col">
         <h4 className="text-lg font-medium text-heading-color">
-          {userStatus ? user?.name : "Mark Jecno"}
+          {userData?.data ? userData?.data?.data?.name : "Mark Jecno"}
         </h4>
         <p className="text-sm font-light text-content-color">
-          {userStatus ? user?.email : "LQpCJ@example.com"}
+          {userData?.data ? userData?.data?.data?.email : "LQpCJ@example.com"}
         </p>
       </div>
 
