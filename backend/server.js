@@ -19,7 +19,7 @@ app.use("/auth/api", authRoutes);
 app.use("/api", contactRoute);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  dbConnect();
+app.listen(PORT, async () => {
+  await dbConnect();
   console.log(`Server running on port ${PORT}`);
 });
