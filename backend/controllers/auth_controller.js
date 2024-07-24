@@ -123,6 +123,8 @@ const updateUser = async (req, res) => {
     const { name, email, password } = req.body;
     const { id } = req.query;
 
+    console.log(req.body, req.query);
+
     // Hashing password
     let hashPassword;
     if (password.length < 8) {
@@ -194,7 +196,7 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.query;
 
-    const user = await User.findOne({ _id: id }, { password: 0 });
+    const user = await User.findOne({ _id: id });
 
     if (!user) {
       return res.status(400).json({
@@ -208,7 +210,7 @@ const getUserById = async (req, res) => {
       status_code: 200,
     });
   } catch (error) {
-    console.log("Error while getting data", error);
+    console.log("Error while getting user data by id", error);
     return res.status(400).json({
       message: "Error while getting data",
     });
