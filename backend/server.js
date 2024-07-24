@@ -11,6 +11,7 @@ import authRoutes from "./routes/auth_routes.js";
 import contactRoute from "./routes/contact_route.js";
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(errorMiddleware);
 

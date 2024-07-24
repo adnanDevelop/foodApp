@@ -15,6 +15,8 @@ const register = async (req, res) => {
     const { name, email, password } = req.body;
     const image = req.file.path;
 
+    console.log(name, email, password, req.file.path);
+
     if (!image) {
       return res.status(400).json({ message: "Please select image" });
     }
