@@ -17,12 +17,9 @@ import Faq from "../modules/faq/Faq";
 // import Cart from "../modules/checkout/Cart";
 import Contact from "../modules/contact/Contact";
 import NotFound from "../modules/404/NotFound";
-import { useSelector } from "react-redux";
+import Setting from "../modules/setting/Setting";
 
 export const Routes = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  console.log(isAuthenticated);
-
   return useRoutes([
     {
       path: "/",
@@ -55,6 +52,10 @@ export const Routes = () => {
         {
           path: "contact",
           element: <Contact />,
+        },
+        {
+          path: "setting",
+          element: <Setting />,
         },
         {
           path: "*",

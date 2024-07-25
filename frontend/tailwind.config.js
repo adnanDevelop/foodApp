@@ -16,6 +16,7 @@ export default {
       },
       fontFamily: {
         Roboto: ["Roboto", "sans-serif"],
+        poppin: ["Poppins", "sans-serif"],
       },
       screens: {
         sm: "640px",

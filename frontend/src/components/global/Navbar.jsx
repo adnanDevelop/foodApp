@@ -148,7 +148,10 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li onClick={handleClick}>
-                    <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link
+                      to="/setting"
+                      className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow"
+                    >
                       Setting
                     </Link>
                   </li>
@@ -277,7 +280,10 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li onClick={handleClick}>
-                    <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link
+                      to="/setting"
+                      className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow"
+                    >
                       Setting
                     </Link>
                   </li>

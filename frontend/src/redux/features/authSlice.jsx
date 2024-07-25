@@ -24,6 +24,14 @@ const authSlice = createSlice({
       localStorage.removeItem("foodAppToken");
       localStorage.removeItem("loggedInUserId");
     },
+
+    deleteAccount: (state) => {
+      state.isAuthenticated = false;
+      state.token = null;
+      state.loggedInUserId = null;
+      localStorage.removeItem("foodAppToken");
+      localStorage.removeItem("loggedInUserId");
+    },
   },
 });
 
