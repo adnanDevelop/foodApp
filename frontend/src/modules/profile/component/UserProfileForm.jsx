@@ -25,17 +25,23 @@ const UserProfileForm = () => {
   // Update api
   const [updateUser] = useUpdateUserMutation();
 
+  console.log(userData?.data?.data);
+
   const updateProfile = async (data) => {
     setLoading(true);
     try {
-      const updateData = { ...data, id: userData?.data?.data?._id };
-      const response = await updateUser(updateData).unwrap();
+      // const updateData = { id: userData?.data?.data?._id, data };
+      const response = await updateUser({
+        ...data,
+        id: userData?.data?.data?._id,
+      }).unwrap();
       toast.success(response.message);
       reset();
+      window.location.reload();
       // navigate("/");
     } catch (error) {
       toast.error(error?.data?.message);
-      console.log("Update Error:", error);
+      console.log("Update Error:", error?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -113,8 +119,7 @@ const UserProfileForm = () => {
             type="password"
             disabled
             className="w-full h-[50px] bg-light-white focus:outline-none px-2 rounded-md text-sm"
-            // placeholder={userStatus && user?.password}
-            placeholder={userData?.data && userData?.data?.data?.password}
+            defaultValue={userData?.data && userData?.data?.data?.password}
             name="password"
           />
         </div>

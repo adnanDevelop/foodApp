@@ -35,11 +35,11 @@ const authApi = createApi({
       }),
     }),
     updateUser: builder.mutation({
-      query: (body, id) => ({
+      query: ({ id, ...body }) => ({
         url: `/update-user`,
         method: "PUT",
         body: body,
-        params: id,
+        params: { id },
       }),
       tagTypes: ["user"],
     }),

@@ -122,32 +122,17 @@ const login = async (req, res) => {
 // Update user profile
 const updateUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email } = req.body;
     const { id } = req.query;
 
-    console.log(req.body, req.query);
-
-    // Hashing password
-    let hashPassword;
-    if (password.length < 8) {
-      return res.status(400).json({
-        message: "Password must be at least 8 characters long",
-        status_code: 400,
-      });
-    } else {
-      hashPassword = await bcrypt.hash(password, 10);
-    }
+    console.log(req.body, "body content", req.query, "query content");
 
     // Update user in database
-    await User.updateOne(
-      { _id: id },
-      { $set: { name, email, password: hashPassword } }
-    );
+    await User.updateOne({ _id: id }, { $set: { name, email } });
 
     // Sending success response to the client
     return res.status(200).json({
       message: "User updated successfully",
-
       status_code: 200,
     });
   } catch (error) {
