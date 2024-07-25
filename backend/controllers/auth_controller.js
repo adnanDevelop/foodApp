@@ -13,9 +13,10 @@ cloudinary.config({
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const image = req.file.path;
+    const image = req.file ? req.file.path : null;
 
-    console.log(name, email, password, req.file.path);
+    console.log("Request body:", req.body);
+    console.log("Uploaded file:", req.file);
 
     if (!image) {
       return res.status(400).json({ message: "Please select image" });
@@ -55,6 +56,7 @@ const register = async (req, res) => {
       { name, email, password, image: imageUrl },
       { password: 0 }
     );
+    console.log(user);
     return res.status(200).json({
       message: "User registered successfully",
       user,
@@ -93,7 +95,7 @@ const login = async (req, res) => {
     // If user doesn't exist
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid email address" });
     }
 
     // if email is incorrect
@@ -122,13 +124,40 @@ const login = async (req, res) => {
 // Update user profile
 const updateUser = async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, currentPassword, newPassword } = req.body;
     const { id } = req.query;
 
-    console.log(req.body, "body content", req.query, "query content");
+    // if password is less than 8
+    if (newPassword.length < 8) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 8 characters long" });
+    }
+
+    const isUserExist = await User.findOne({ _id: id });
+
+    // Matching current password
+    const isPasswordMatch = await bcrypt.compare(
+      currentPassword,
+      isUserExist.password
+    );
+
+    // If Current doesn't match with
+    if (!isPasswordMatch) {
+      return res.status(400).json({
+        message: "Current password doesn't match",
+        status_code: 400,
+      });
+    }
+
+    // Hashing new  password
+    const hashNewPassword = await bcrypt.hash(newPassword, 10);
 
     // Update user in database
-    await User.updateOne({ _id: id }, { $set: { name, email } });
+    await User.updateOne(
+      { _id: id },
+      { $set: { name, email, password: hashNewPassword } }
+    );
 
     // Sending success response to the client
     return res.status(200).json({

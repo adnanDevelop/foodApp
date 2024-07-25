@@ -12,14 +12,11 @@ import {
 } from "../controllers/auth_controller.js";
 import verifyToken from "../middlewares/verifyToken.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const router = Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../../frontend/public/uploads"));
+    cb(null, "uploads");
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);

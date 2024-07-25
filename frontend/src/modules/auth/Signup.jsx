@@ -30,13 +30,13 @@ const Signup = () => {
   const submitData = async (data) => {
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("image", data.image[0]);
-
     try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      formData.append("image", data.image[0]);
+
       const response = await registerUser(formData).unwrap();
 
       toast.success(response.message);
