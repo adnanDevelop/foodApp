@@ -18,7 +18,7 @@ const UserProfile = () => {
     { icon: <FaRegUser />, path: "/user-profile", title: "Change Profile" },
     { icon: <RiShoppingBag4Fill />, path: "/my-order", title: "My Order" },
     { icon: <FaMapMarkerAlt />, path: "/user-address", title: "Saved Address" },
-    { icon: <FaQuestionCircle />, path: "/help", title: "Help" },
+    { icon: <FaQuestionCircle />, path: "/faq", title: "Help" },
     { icon: <IoSettingsOutline />, path: "/setting", title: "Setting" },
     { icon: <IoIosLogOut />, title: "Log Out" },
   ];

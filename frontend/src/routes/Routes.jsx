@@ -13,6 +13,7 @@ import Profile from "../modules/profile/Profile";
 import Home from "../modules/home/Home";
 import Menu from "../modules/menu/Menu";
 import Blog from "../modules/blog/Blog";
+import Faq from "../modules/faq/Faq";
 // import Cart from "../modules/checkout/Cart";
 import Contact from "../modules/contact/Contact";
 import NotFound from "../modules/404/NotFound";
@@ -39,10 +40,10 @@ export const Routes = () => {
           path: "blog",
           element: <Blog />,
         },
-        // {
-        //   path: "cart",
-        //   element: <Cart />,
-        // },
+        {
+          path: "faq",
+          element: <Faq />,
+        },
         {
           path: "/user-profile",
           element: <Profile />,
@@ -71,6 +72,10 @@ export const Routes = () => {
         {
           path: "signup",
           element: <Signup />,
+        },
+        {
+          path: "*",
+          element: <NotFound />,
         },
       ],
     },
