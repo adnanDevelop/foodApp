@@ -46,7 +46,7 @@
     }
 
     .section_padding {
-        @apply py-[80px];
+        @apply md:py-[80px] py-[60px];
     }
 
     .btn-primary {
