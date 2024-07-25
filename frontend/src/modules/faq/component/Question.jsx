@@ -1,5 +1,3 @@
-import React from "react";
-
 const Question = () => {
   return (
     <main className=" bg-light-white">

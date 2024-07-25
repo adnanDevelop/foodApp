@@ -16,7 +16,11 @@ const NotFound = () => {
           address may be outdated or we may have moved the since you last
           bookmarked it.
         </p>
-        <Link to="/" className="flex items-center justify-center btn-primary">
+        <Link
+          to="/"
+          onClick={() => window.scrollTo({ top: 0 })}
+          className="flex items-center justify-center btn-primary"
+        >
           back to home
         </Link>
       </section>

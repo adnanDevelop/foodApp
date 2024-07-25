@@ -33,6 +33,13 @@ const Navbar = () => {
     showSideBar(!sideBar);
   };
 
+  const handleClick = () => {
+    const elem = document.activeElement;
+    if (elem) {
+      elem?.blur();
+    }
+  };
+
   return (
     <div className="relative">
       {/* Lg navbar */}
@@ -116,16 +123,18 @@ const Navbar = () => {
                     </p>
                   </div>
                 </div>
+                {/* dropdown links */}
                 <ul
                   tabIndex={0}
                   className="dropdown-content menu bg-base-100 rounded-xl p-4 z-[1] w-[200px]  shadow"
                 >
-                  <li>
+                  <li onClick={handleClick}>
                     <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
                       Saved Address
                     </Link>
                   </li>
-                  <li>
+
+                  <li onClick={handleClick}>
                     <Link
                       to="/user-profile"
                       className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow"
@@ -133,17 +142,17 @@ const Navbar = () => {
                       Profile
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={handleClick}>
                     <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
                       My Orders
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={handleClick}>
                     <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
                       Setting
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={handleClick}>
                     <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
                       Saved Cards
                     </Link>
@@ -163,7 +172,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Screen navbar */}
-      <div className="w-full mx-auto custom_width absolute block lg:hidden left-[50%] translate-x-[-50%] z-[1]">
+      <div className="w-full mx-auto custom_width absolute left-[50%] translate-x-[-50%] block lg:hidden  z-[1]">
         <div className="flex items-center justify-between custom_width h-[60px]">
           {/* Logo */}
           <div className="flex items-center gap-x-3">
@@ -201,57 +210,7 @@ const Navbar = () => {
               alt=""
             />
           </div>
-          {/* Link */}
-          <div
-            className={`fixed w-[250px] h-screen bg-black top-0 transitions ${
-              sideBar ? " left-[0%]" : "left-[-200%]"
-            } `}
-          >
-            {/* Nav links */}
-            <div className="p-[20px]">
-              <div className="flex items-center justify-between menu_header">
-                <div className="logo">
-                  <Link to="/">
-                    <img
-                      src="/image/logo.svg"
-                      alt=""
-                      className="inline-block w-[100px] object-cover"
-                      onClick={() => {
-                        showSideBar(false);
-                        setOpen(false);
-                      }}
-                      loading="lazy"
-                    />
-                  </Link>
-                </div>
-                <button
-                  className="close_btn text-[16px] text-white p-2 border-2  border-white rounded-md transition duration-300 hover:border-white hover:text-white "
-                  onClick={() => {
-                    showSideBar(false);
-                    setOpen(false);
-                  }}
-                >
-                  <GrClose />
-                </button>
-              </div>
-              <ul className="flex flex-col items-start list-none gap-y-6 mt-[50px]">
-                {links.map((link) => (
-                  <li key={link.path}>
-                    <Link
-                      to={link.path}
-                      className="text-white capitalize transitions hover:text-yellow"
-                      onClick={() => {
-                        showSideBar(false);
-                        setOpen(false);
-                      }}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+
           {/* Right section */}
           <div className="flex items-center gap-x-2">
             {/* Cart section */}
@@ -299,12 +258,12 @@ const Navbar = () => {
                   tabIndex={0}
                   className="dropdown-content menu bg-base-100 rounded-xl p-3 z-[1] w-[150px]  shadow "
                 >
-                  <li>
+                  <li onClick={handleClick}>
                     <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
                       Saved Address
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={handleClick}>
                     <Link
                       to="/user-profile"
                       className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow"
@@ -312,17 +271,17 @@ const Navbar = () => {
                       Profile
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={handleClick}>
                     <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
                       My Orders
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={handleClick}>
                     <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
                       Setting
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={handleClick}>
                     <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
                       Saved Cards
                     </Link>
@@ -338,6 +297,58 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Link */}
+      <div
+        className={`fixed w-[250px] h-screen bg-black top-0 transitions z-10 ${
+          sideBar ? " left-[0%]" : "left-[-200%]"
+        } `}
+      >
+        {/* Nav links */}
+        <div className="p-[20px]">
+          <div className="flex items-center justify-between menu_header">
+            <div className="logo">
+              <Link to="/">
+                <img
+                  src="/image/logo.svg"
+                  alt=""
+                  className="inline-block w-[100px] object-cover"
+                  onClick={() => {
+                    showSideBar(false);
+                    setOpen(false);
+                  }}
+                  loading="lazy"
+                />
+              </Link>
+            </div>
+            <button
+              className="close_btn text-[16px] text-white p-2 border-2  border-white rounded-md transition duration-300 hover:border-white hover:text-white "
+              onClick={() => {
+                showSideBar(false);
+                setOpen(false);
+              }}
+            >
+              <GrClose />
+            </button>
+          </div>
+          <ul className="flex flex-col items-start list-none gap-y-6 mt-[50px]">
+            {links.map((link) => (
+              <li key={link.path}>
+                <Link
+                  to={link.path}
+                  className="text-white capitalize transitions hover:text-yellow"
+                  onClick={() => {
+                    showSideBar(false);
+                    setOpen(false);
+                  }}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

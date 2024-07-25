@@ -17,8 +17,12 @@ import Faq from "../modules/faq/Faq";
 // import Cart from "../modules/checkout/Cart";
 import Contact from "../modules/contact/Contact";
 import NotFound from "../modules/404/NotFound";
+import { useSelector } from "react-redux";
 
 export const Routes = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated);
+
   return useRoutes([
     {
       path: "/",
@@ -66,18 +70,18 @@ export const Routes = () => {
       ),
       children: [
         {
-          path: "/login",
+          path: "login",
           element: <Login />,
         },
         {
           path: "signup",
           element: <Signup />,
         },
-        {
-          path: "*",
-          element: <NotFound />,
-        },
       ],
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ]);
 };

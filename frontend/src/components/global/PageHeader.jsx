@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 const PageHeader = ({ title, breadCrumb }) => {
   return (
-    <main className="h-[40vh] pt-[50px] flex items-center justify-center bg-[url('/image/home-bg.jpg')] bg-top bg-no-repeat bg-cover  w-full">
+    <main className="sm:h-[40vh] h-[35vh] md:pt-[50px] pt-[30px] flex items-center justify-center bg-[url('/image/home-bg.jpg')] bg-top bg-no-repeat bg-cover  w-full">
       {/* Bread Crumbs */}
       <section className="flex flex-col items-center jdustify-center ">
         <h2 className="text-white capitalize">{title ? title : "Profile"}</h2>
