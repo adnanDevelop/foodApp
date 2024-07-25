@@ -25,7 +25,7 @@ const authSlice = createSlice({
       localStorage.removeItem("loggedInUserId");
     },
 
-    deleteAccount: (state) => {
+    deleteAccountDetails: (state) => {
       state.isAuthenticated = false;
       state.token = null;
       state.loggedInUserId = null;
@@ -35,5 +35,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { storeToken, logout } = authSlice.actions;
+export const { storeToken, logout, deleteAccountDetails } = authSlice.actions;
 export default authSlice.reducer;

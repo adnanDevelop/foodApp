@@ -43,6 +43,15 @@ const authApi = createApi({
       }),
       tagTypes: ["user"],
     }),
+    deleteUser: builder.mutation({
+      query: ({ id }) => ({
+        url: "/delete-user",
+        method: "DELETE",
+        // body: body,
+        params: { id },
+      }),
+      tagTypes: ["user"],
+    }),
   }),
 });
 
@@ -52,5 +61,6 @@ export const {
   useGetUserByIdQuery,
   useGetAllUserQuery,
   useUpdateUserMutation,
+  useDeleteUserMutation,
 } = authApi;
 export default authApi;

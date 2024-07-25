@@ -1,9 +1,32 @@
-// import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { deleteAccountDetails } from "../../../redux/features/authSlice";
+
+// Apis
 import { getUser } from "../../../utils/getUser";
+import { useDeleteUserMutation } from "../../../redux/services/authApi";
+
+import DeleteModal from "./DeleteModal";
 
 const DeleteAccount = () => {
-  //   const dispatch = useDispatch();
   const userData = getUser();
+
+  const [deleteUser] = useDeleteUserMutation();
+
+  // Delete User function
+  const deleteAccount = async () => {
+    try {
+      await deleteUser({ id: userData?.data?.data?._id })
+        .unwrap()
+        .then((response) => {
+          toast.success(response?.message);
+        })
+        .catch((err) => {
+          toast.error(err?.data?.message);
+        });
+    } catch (err) {
+      console.log("Error while delete account", err);
+    }
+  };
 
   return (
     <section className="px-[18px] py-[30px] bg-light-white">
@@ -31,7 +54,6 @@ const DeleteAccount = () => {
           <input
             type="checkbox"
             className={`toggle bg-[#F2A93E] !border-[#F2A93E] !toggle-warning hover:bg-[#F2A93E]`}
-            defaultChecked
           />
         </div>
         <div className="flex items-center justify-between bg-white">
@@ -41,7 +63,6 @@ const DeleteAccount = () => {
           <input
             type="checkbox"
             className={`toggle bg-[#F2A93E] !border-[#F2A93E] !toggle-warning hover:bg-[#F2A93E]`}
-            defaultChecked
           />
         </div>
       </div>
@@ -85,12 +106,19 @@ const DeleteAccount = () => {
             <button
               type="button"
               className="btn-rounded-sm h-[42px] px-[20px] text-sm "
+              onClick={() => document.getElementById("my_modal_1").showModal()}
             >
               Delete Account
             </button>
           </div>
         </div>
       </div>
+
+      {/* Delete Account Modal */}
+      <DeleteModal
+        deleteAccount={deleteAccount}
+        deleteAccountDetails={deleteAccountDetails}
+      />
     </section>
   );
 };

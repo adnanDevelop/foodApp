@@ -79,7 +79,7 @@ const Login = () => {
                 <RiLockPasswordLine />
               </span>
               <input
-                type="text"
+                type="password"
                 className="flex-1 w-full h-[50px] bg-light-white focus:outline-none text-sm px-1 text-content-color"
                 placeholder="Password..."
                 name="password"
@@ -89,6 +89,12 @@ const Login = () => {
                   },
                   required: "Password is required",
                 })}
+                onFocus={(e) => {
+                  e.target.type = "text";
+                }}
+                onBlur={(e) => {
+                  e.target.type = "password";
+                }}
               />
             </div>
             {errors.password && (

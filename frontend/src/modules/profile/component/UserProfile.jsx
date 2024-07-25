@@ -31,7 +31,7 @@ const UserProfile = () => {
           src={
             userData?.data ? userData?.data?.data?.image : "/image/avator.png"
           }
-          className="w-[100px] rounded-full border-[5px] border-white  absolute bottom-[-50px] left-[50%] translate-x-[-50%]"
+          className="w-[100px] h-[100px] object-cover rounded-full border-[5px] border-white  absolute bottom-[-50px] left-[50%] translate-x-[-50%]"
           alt=""
         />
       </div>

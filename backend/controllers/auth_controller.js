@@ -177,6 +177,7 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.query;
+
     // Check if user exist before deletion
     const isUserExist = await User.findOne({ _id: id });
     if (!isUserExist) {
@@ -189,7 +190,7 @@ const deleteUser = async (req, res) => {
     // // Delete user from database
     const deleteUser = await User.deleteOne({ _id: id });
 
-    // Check if deleteUser operation was successful
+    // // Check if deleteUser operation was successful
     if (deleteUser.deletedCount !== 1) {
       throw new Error("User deletion failed");
     }
