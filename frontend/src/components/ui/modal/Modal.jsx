@@ -1,8 +1,8 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 
-const Modal = ({ children, className }) => {
+const Modal = ({ children, className, id }) => {
   return (
-    <dialog id="my_modal_1" className={`modal ${className}`}>
+    <dialog id={id} className={`modal ${className}`}>
       {children}
     </dialog>
   );

@@ -106,7 +106,9 @@ const DeleteAccount = () => {
             <button
               type="button"
               className="btn-rounded-sm h-[42px] px-[20px] text-sm "
-              onClick={() => document.getElementById("my_modal_1").showModal()}
+              onClick={() => {
+                document.getElementById("DeleteAccountModal").showModal();
+              }}
             >
               Delete Account
             </button>
@@ -116,6 +118,7 @@ const DeleteAccount = () => {
 
       {/* Delete Account Modal */}
       <DeleteModal
+        id="DeleteAccountModal"
         deleteAccount={deleteAccount}
         deleteAccountDetails={deleteAccountDetails}
       />
