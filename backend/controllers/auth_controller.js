@@ -32,18 +32,6 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // if name and email and password are empty
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    // if email is not valid
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      return res
-        .status(400)
-        .json({ message: "Please add a valid email address" });
-    }
-
     // if password is less than 8
     if (password.length < 8) {
       return res
