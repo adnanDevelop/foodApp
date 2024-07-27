@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const addressModel = new Schema(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -17,6 +17,10 @@ const addressModel = new Schema(
     },
     address: {
       type: String,
+      required: true,
+    },
+    street_number: {
+      type: Number,
       required: true,
     },
     city: {
