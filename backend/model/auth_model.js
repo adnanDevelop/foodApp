@@ -20,6 +20,11 @@ const authSchema = new Schema(
       type: String,
       required: true,
     },
+    selectedAddress: {
+      type: Schema.Types.ObjectId,
+      ref: "user_address",
+      required: true,
+    },
   },
   { timestamps: true }
 );

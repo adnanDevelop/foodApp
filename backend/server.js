@@ -8,6 +8,7 @@ import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 // Routes file
 import authRoutes from "./routes/auth_routes.js";
+import addressRoute from "./routes/address_route.js";
 import contactRoute from "./routes/contact_route.js";
 
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use(errorMiddleware);
 
 // Routes
 app.use("/auth/api", authRoutes);
+app.use("/api/user", addressRoute);
 app.use("/api", contactRoute);
 
 const PORT = process.env.PORT || 5000;
