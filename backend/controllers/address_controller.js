@@ -233,7 +233,7 @@ const getAddress = async (req, res) => {
 // Controller to update selected address
 const setSelectedAddress = async (req, res) => {
   try {
-    const { addressId } = req.body; // The ID of the address to be selected
+    const { addressId } = req.query; // The ID of the address to be selected
 
     // Check if address exists
     const address = await user_address.findById(addressId);
@@ -244,11 +244,11 @@ const setSelectedAddress = async (req, res) => {
       });
     }
 
-    // Update user's selected address
+    // Update user's selected address with the entire address object
     const user = await User.findByIdAndUpdate(
-      req.user._id, // Assuming you have middleware to set req.user
-      { selectedAddress: addressId },
-      { new: true } // Return the updated document
+      req.user._id,
+      { selectedAddress: address.toObject() },
+      { new: true }
     );
 
     if (!user) {

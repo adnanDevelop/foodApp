@@ -21,9 +21,8 @@ const authSchema = new Schema(
       required: true,
     },
     selectedAddress: {
-      type: Schema.Types.ObjectId,
-      ref: "user_address",
-      required: true,
+      type: Map,
+      of: Schema.Types.Mixed,
     },
   },
   { timestamps: true }
