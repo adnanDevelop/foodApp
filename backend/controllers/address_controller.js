@@ -230,10 +230,53 @@ const getAddress = async (req, res) => {
   }
 };
 
+// Controller to update selected address
+const setSelectedAddress = async (req, res) => {
+  try {
+    const { addressId } = req.body; // The ID of the address to be selected
+
+    // Check if address exists
+    const address = await user_address.findById(addressId);
+    if (!address) {
+      return res.status(404).json({
+        message: "Address not found",
+        status_code: 404,
+      });
+    }
+
+    // Update user's selected address
+    const user = await User.findByIdAndUpdate(
+      req.user._id, // Assuming you have middleware to set req.user
+      { selectedAddress: addressId },
+      { new: true } // Return the updated document
+    );
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+        status_code: 400,
+      });
+    }
+
+    res.status(200).json({
+      message: "Selected address updated successfully",
+      data: user,
+      status_code: 200,
+    });
+  } catch (error) {
+    console.log("Error in backend while updating selected address", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      status_code: 500,
+    });
+  }
+};
+
 export {
   createAddress,
   updateAddress,
   deleteAddress,
   deleteMultipleAddresses,
   getAddress,
+  setSelectedAddress,
 };

@@ -6,6 +6,7 @@ import {
   deleteAddress,
   deleteMultipleAddresses,
   getAddress,
+  setSelectedAddress,
 } from "../controllers/address_controller.js";
 
 const router = Router();
