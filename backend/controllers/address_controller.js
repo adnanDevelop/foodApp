@@ -135,22 +135,56 @@ const deleteAddress = async (req, res) => {
       .status(200)
       .json({ message: "Address deleted success fully", data: deleteAddress });
   } catch (error) {
-    console.log("Error in backend while creating user address", error);
+    console.log("Error in backend while deleting user address", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      status_code: 500,
+    });
   }
 };
 
 // Get all address controller
 const getAddress = async (req, res) => {
   try {
-    const getData = await user_address.find();
-    console.log(getData);
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const limit = parseInt(req.query.limit) || 10; // Default to 10 items per page
+    const search = req.query.search || ""; // Default to no search
+
+    // Calculate the number of items to skip
+    const skip = (page - 1) * limit;
+
+    // Build search query
+    const searchQuery = {
+      $or: [
+        { firstName: { $regex: search, $options: "i" } },
+        { lastName: { $regex: search, $options: "i" } },
+        { address: { $regex: search, $options: "i" } },
+        { city: { $regex: search, $options: "i" } },
+      ],
+    };
+
+    // Retrieve data with pagination and search
+    const getData = await user_address
+      .find(searchQuery)
+      .skip(skip)
+      .limit(limit);
+    const totalCount = await user_address.countDocuments(searchQuery); // Get the total number of matching documents
 
     res.status(200).json({
       message: "Addresses retrieved successfully",
-      data: { getData },
+      data: getData,
+      pagination: {
+        page,
+        limit,
+        totalCount,
+      },
     });
   } catch (error) {
-    console.log("Error in backend while creating user address", error);
+    console.log("Error in backend while retrieving user address", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      status_code: 500,
+    });
   }
 };
 

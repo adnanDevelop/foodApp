@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { string } from "zod";
 
 const addressModel = new Schema(
   {
@@ -20,7 +21,7 @@ const addressModel = new Schema(
       required: true,
     },
     street_number: {
-      type: Number,
+      type: Number || string,
       required: true,
     },
     city: {
