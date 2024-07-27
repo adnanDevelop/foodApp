@@ -133,9 +133,51 @@ const deleteAddress = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Address deleted success fully", data: deleteAddress });
+      .json({ message: "Address deleted successfully", data: deleteAddress });
   } catch (error) {
     console.log("Error in backend while deleting user address", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      status_code: 500,
+    });
+  }
+};
+
+// Delete multiple addresses at once
+const deleteMultipleAddresses = async (req, res) => {
+  try {
+    const { ids } = req.body; // Expecting an array of IDs
+    // console.log(ids);
+
+    // Validate IDs
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        message: "Array of IDs is required",
+        status_code: 400,
+      });
+    }
+
+    const deleteResult = await user_address.deleteMany({
+      _id: { $in: ids },
+    });
+
+    // Check if any documents were actually deleted
+    if (deleteResult.deletedCount > 0) {
+      return res.status(200).json({
+        message: "Addresses deleted successfully",
+        data: deleteResult,
+      });
+    } else {
+      return res.status(404).json({
+        message: "No addresses found to delete",
+        status_code: 404,
+      });
+    }
+  } catch (error) {
+    console.log(
+      "Error in backend while deleting multiple user addresses",
+      error
+    );
     return res.status(500).json({
       message: "Internal Server Error",
       status_code: 500,
@@ -188,4 +230,10 @@ const getAddress = async (req, res) => {
   }
 };
 
-export { createAddress, updateAddress, deleteAddress, getAddress };
+export {
+  createAddress,
+  updateAddress,
+  deleteAddress,
+  deleteMultipleAddresses,
+  getAddress,
+};
