@@ -37,11 +37,16 @@ const Signup = () => {
       formData.append("password", data.password);
       formData.append("image", data.image[0]);
 
-      const response = await registerUser(formData).unwrap();
-
-      toast.success(response.message);
-      dispatch(storeToken(response.token));
-      navigate("/");
+      registerUser(formData)
+        .then((response) => {
+          toast.success(response?.message);
+          dispatch(storeToken(response.token));
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err?.data?.message);
+        });
     } catch (error) {
       toast.error(error?.data?.message || error?.message);
       console.log("Registration Error:", error);

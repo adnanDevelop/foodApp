@@ -13,10 +13,9 @@ cloudinary.config({
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const image = req.file ? req.file.path : null;
+    const image = req.file.path;
 
     console.log("Request body:", req.body);
-    console.log("Uploaded file:", req.file);
 
     if (!image) {
       return res.status(400).json({ message: "Please select image" });
@@ -52,7 +51,9 @@ const register = async (req, res) => {
     });
   } catch (error) {
     console.error("Error while registering user", error);
-    return res.status(400).json({ message: "Error while registering user" });
+    return res
+      .status(400)
+      .json({ message: "Error while registering user", error: error?.message });
   }
 };
 
