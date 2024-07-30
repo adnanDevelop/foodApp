@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 // custom hook
-import { getUser } from "../../utils/getUser";
+import { useGetLoggedInUserQuery } from "../../redux/services/authApi";
 
 // Redux
 import { useDispatch } from "react-redux";
@@ -15,7 +15,7 @@ import { GrClose } from "react-icons/gr";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const userData = getUser();
+  const { data } = useGetLoggedInUserQuery();
 
   const [open, setOpen] = useState(false);
   const [sideBar, showSideBar] = useState(false);
@@ -66,7 +66,7 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          
+
           {/* Right section */}
           <div className="flex items-center gap-x-2">
             {/* Cart section */}
@@ -108,16 +108,14 @@ const Navbar = () => {
                 >
                   <img
                     src={`${
-                      userData?.data
-                        ? userData?.data?.data?.image
-                        : "/image/avator.png"
+                      data?.data ? data?.data.image : "/image/avator.png"
                     }`}
                     className="w-[40px] h-[40px] object-cover rounded-full"
                     alt=""
                   />
                   <div>
                     <p className="text-sm font-medium leading-none capitalize text-content-color">
-                      {userData?.data ? userData?.data?.data?.name : "User"}
+                      {data?.data ? data?.data.name : "User"}
                     </p>
                     <p className="text-base font-medium text-white">
                       My Account
@@ -245,16 +243,14 @@ const Navbar = () => {
                 >
                   <img
                     src={`${
-                      userData?.data
-                        ? userData?.data?.data?.image
-                        : "/image/avator.png"
+                      data?.data ? data?.dataimage : "/image/avator.png"
                     }`}
                     className="w-[40px] h-[40px] object-cover rounded-full"
                     alt=""
                   />
                   <div className="hidden md:block">
                     <p className="text-sm font-medium leading-none capitalize text-content-color">
-                      {userData?.data ? userData?.data?.data?.name : "User"}
+                      {data?.data ? data?.data.name : "User"}
                     </p>
                     <p className="text-base font-medium text-white">
                       My Account

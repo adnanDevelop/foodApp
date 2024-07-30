@@ -42,11 +42,11 @@ authSchema.pre("save", async function (next) {
 authSchema.methods.generateAuthToken = async function () {
   try {
     const user = this;
-    const token = jwt.sign(
-      { _id: user._id.toString(), email: this.email },
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: "1d" }
-    );
+
+    // { _id: user._id.toString(), email: this.email },
+    const token = jwt.sign({ data: user }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1d",
+    });
     return token;
   } catch (error) {
     console.log("Error while generating the token", error);

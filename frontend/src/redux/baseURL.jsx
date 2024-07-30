@@ -1,19 +1,19 @@
-import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import { RootState } from './store';
+// import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+// // import { RootState } from './store';
 
-// base url to request backend
-export const baseUrl = "http://localhost:3000/auth/api/get-user";
+// // base url to request backend
+// export const baseUrl = "http://localhost:3000/auth/api/get-user";
 
-const baseQuery = fetchBaseQuery({
-  baseUrl,
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState()?.auth?.token;
+// const baseQuery = fetchBaseQuery({
+//   baseUrl,
+//   prepareHeaders: (headers, { getState }) => {
+//     const token = getState()?.auth?.token;
 
-    console.log(token);
+//     console.log(token);
 
-    if (token) headers.set("Authorization", "Bearer " + token);
-    return headers;
-  },
-});
+//     if (token) headers.set("Authorization", "Bearer " + token);
+//     return headers;
+//   },
+// });
 
-export default baseQuery;
+// export default baseQuery;

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 // Redux
-import { getUser } from "../../../utils/getUser";
+import { useGetLoggedInUserQuery } from "../../../redux/services/authApi";
 
 import { useUpdateUserMutation } from "../../../redux/services/authApi";
 
@@ -20,36 +20,35 @@ const UserProfileForm = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const userData = getUser();
 
   // Update api
   const [updateUser] = useUpdateUserMutation();
+  const { data } = useGetLoggedInUserQuery();
 
-  const updateProfile = async (data) => {
+  console.log("beforeData", data);
+
+  const updateProfile = async (formData) => {
     setLoading(true);
-    console.log("form data", data);
+    console.log("form data", formData);
     try {
       await updateUser({
-        id: userData?.data?.data?._id,
-        ...data,
+        id: data?.data?._id,
+        body: formData,
       })
         .unwrap()
         .then((response) => {
           toast.success(response?.message);
           reset();
-
-          return setTimeout(() => {
-            window.location.reload();
-          }, 2000);
         })
         .catch((err) => {
           toast.error(err?.data?.message);
         });
     } catch (error) {
       toast.error(error?.data?.message);
-      console.log("Error while updating user:", error?.data?.message);
+      console.log("Error while updating user:", error?.message);
     } finally {
       setLoading(false);
+      console.log("afterData", data);
     }
   };
 
@@ -73,7 +72,7 @@ const UserProfileForm = () => {
           <input
             type="text"
             className="w-full h-[50px] bg-light-white focus:outline-none px-2 rounded-md text-sm"
-            placeholder={userData?.data && userData?.data?.data?.name}
+            placeholder={data?.data && data?.data?.name}
             name="name"
             {...register("name", {
               required: "Name is required",
@@ -97,7 +96,7 @@ const UserProfileForm = () => {
           <input
             type="email"
             className="w-full h-[50px] bg-light-white focus:outline-none px-2 rounded-md text-sm"
-            placeholder={userData?.data && userData?.data?.data?.email}
+            placeholder={data?.data && data?.data?.email}
             name="email"
             {...register("email", {
               required: "Email is required",
@@ -129,7 +128,7 @@ const UserProfileForm = () => {
             <input
               type="password"
               className="w-full h-[50px] bg-light-white focus:outline-none px-2 rounded-md text-sm"
-              placeholder={userData?.data && userData?.data?.data?.password}
+              placeholder={data?.data && data?.data?.password}
               name="currentPassword"
               {...register("currentPassword", {
                 required: "Password is required",

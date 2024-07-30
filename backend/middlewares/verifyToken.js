@@ -14,13 +14,8 @@ const verifyToken = async (req, res, next) => {
 
   try {
     const verifyUser = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
-    // Get loggedin user datsa
-    const loggedInUser = await User.findOne(
-      { email: verifyUser.email },
-      { createdAt: 0, updatedAt: 0 }
-    );
 
-    req.user = loggedInUser;
+    req.user = verifyUser.data;
     req.token = jwtToken;
 
     next();

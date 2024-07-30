@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isAuthenticated: !!localStorage.getItem("foodAppToken"),
   token: localStorage.getItem("foodAppToken"),
-  loggedInUserId: localStorage.getItem("loggedInUserId"),
 };
 
 const authSlice = createSlice({
@@ -15,14 +14,12 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.loggedInUserId = action.payload.userId;
       localStorage.setItem("foodAppToken", action.payload.token);
-      localStorage.setItem("loggedInUserId", action.payload.userId);
     },
     logout: (state) => {
       state.isAuthenticated = false;
       state.token = null;
       state.loggedInUserId = null;
       localStorage.removeItem("foodAppToken");
-      localStorage.removeItem("loggedInUserId");
     },
 
     deleteAccountDetails: (state) => {
@@ -30,7 +27,6 @@ const authSlice = createSlice({
       state.token = null;
       state.loggedInUserId = null;
       localStorage.removeItem("foodAppToken");
-      localStorage.removeItem("loggedInUserId");
     },
   },
 });

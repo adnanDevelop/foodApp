@@ -27,7 +27,6 @@ const Login = () => {
   const [loginUser] = useLoginMutation();
 
   const submitData = async (data) => {
-    console.log(data);
     setLoading(true);
     try {
       const response = await loginUser(data).unwrap();

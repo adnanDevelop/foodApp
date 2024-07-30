@@ -1,7 +1,7 @@
 // Redux
 import { useDispatch } from "react-redux";
-import { getUser } from "../../../utils/getUser";
 import { logout } from "../../../redux/features/authSlice";
+import { useGetLoggedInUserQuery } from "../../../redux/services/authApi";
 
 // Icons
 import { IoIosLogOut } from "react-icons/io";
@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const userData = getUser();
+  const { data } = useGetLoggedInUserQuery();
 
   const links = [
     { icon: <FaRegUser />, path: "/user-profile", title: "Change Profile" },
@@ -28,19 +28,17 @@ const UserProfile = () => {
       {/* Profile header */}
       <div className="w-full h-[150px] yellow_gradient rounded-tl-lg rounded-tr-lg relative">
         <img
-          src={
-            userData?.data ? userData?.data?.data?.image : "/image/avator.png"
-          }
+          src={data?.data ? data?.data.image : "/image/avator.png"}
           className="w-[100px] h-[100px] object-cover rounded-full border-[5px] border-white  absolute bottom-[-50px] left-[50%] translate-x-[-50%]"
           alt=""
         />
       </div>
       <div className="mt-[55px] flex items-center justify-center flex-col">
         <h4 className="text-lg font-medium text-heading-color">
-          {userData?.data ? userData?.data?.data?.name : "Mark Jecno"}
+          {data?.data ? data?.data.name : "Mark Jecno"}
         </h4>
         <p className="text-sm font-light text-content-color">
-          {userData?.data ? userData?.data?.data?.email : "LQpCJ@example.com"}
+          {data?.data ? data?.data.email : "LQpCJ@example.com"}
         </p>
       </div>
 

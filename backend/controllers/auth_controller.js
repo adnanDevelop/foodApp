@@ -115,10 +115,18 @@ const updateUser = async (req, res) => {
 
     const isUserExist = await User.findOne({ _id: id });
 
+    // If user not found
+    if (!isUserExist) {
+      return res.status(400).json({
+        message: "User not found",
+        status_code: 400,
+      });
+    }
+
     // Matching current password
     const isPasswordMatch = await bcrypt.compare(
       currentPassword,
-      isUserExist.password
+      isUserExist?.password
     );
 
     // If Current doesn't match with

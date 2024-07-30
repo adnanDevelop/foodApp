@@ -1,5 +1,6 @@
 // Icons
 import { IoSearch } from "react-icons/io5";
+
 function Hero() {
   return (
     <main className="bg-[url('/image/home-bg.jpg')] bg-center bg-no-repeat bg-cover w-ful">
