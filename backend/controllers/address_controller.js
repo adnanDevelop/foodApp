@@ -233,10 +233,10 @@ const getAddress = async (req, res) => {
 // Controller to update selected address
 const setSelectedAddress = async (req, res) => {
   try {
-    const { addressId } = req.query; // The ID of the address to be selected
+    const { id } = req.query; // The ID of the address to be selected
 
     // Check if address exists
-    const address = await user_address.findById(addressId);
+    const address = await user_address.findById(id);
     if (!address) {
       return res.status(404).json({
         message: "Address not found",

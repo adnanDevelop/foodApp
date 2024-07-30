@@ -14,10 +14,10 @@ import Home from "../modules/home/Home";
 import Menu from "../modules/menu/Menu";
 import Blog from "../modules/blog/Blog";
 import Faq from "../modules/faq/Faq";
-// import Cart from "../modules/checkout/Cart";
 import Contact from "../modules/contact/Contact";
 import NotFound from "../modules/404/NotFound";
 import Setting from "../modules/setting/Setting";
+import UserAddress from "../modules/userAddress/UserAddress";
 
 export const Routes = () => {
   return useRoutes([
@@ -56,6 +56,10 @@ export const Routes = () => {
         {
           path: "setting",
           element: <Setting />,
+        },
+        {
+          path: "user-address",
+          element: <UserAddress />,
         },
         {
           path: "*",

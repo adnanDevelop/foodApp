@@ -13,7 +13,13 @@ cloudinary.config({
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const image = req?.file?.path;
+    const image = req.file.path;
+
+    console.log("Request body:", req.body);
+
+    if (!image) {
+      return res.status(400).json({ message: "Please select image" });
+    }
 
     // Upload image to Cloudinary
     const result = await cloudinary.uploader.upload(image);

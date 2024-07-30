@@ -66,6 +66,7 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+          
           {/* Right section */}
           <div className="flex items-center gap-x-2">
             {/* Cart section */}
@@ -129,7 +130,10 @@ const Navbar = () => {
                   className="dropdown-content menu bg-base-100 rounded-xl p-4 z-[1] w-[200px]  shadow"
                 >
                   <li onClick={handleClick}>
-                    <Link className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link
+                      to="/user-address"
+                      className="p-0 pb-2 font-medium text-content-color transitions hover:text-yellow focus:text-yellow"
+                    >
                       Saved Address
                     </Link>
                   </li>
@@ -262,7 +266,10 @@ const Navbar = () => {
                   className="dropdown-content menu bg-base-100 rounded-xl p-3 z-[1] w-[150px]  shadow "
                 >
                   <li onClick={handleClick}>
-                    <Link className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow">
+                    <Link
+                      to="/user-address"
+                      className="p-0 pb-1.5 font-medium text-xs text-content-color transitions hover:text-yellow focus:text-yellow"
+                    >
                       Saved Address
                     </Link>
                   </li>

@@ -39,16 +39,14 @@ const Signup = () => {
       formData.append("password", data.password);
       formData.append("image", data.image[0]);
 
-      const response = await registerUser(formData)
-        .unwrap()
+      registerUser(formData)
         .then((response) => {
           toast.success(response?.message);
-          reset();
           dispatch(storeToken(response.token));
-
           navigate("/");
         })
         .catch((err) => {
+          console.log(err);
           toast.error(err?.data?.message);
         });
     } catch (error) {

@@ -61,6 +61,7 @@ const UserProfile = () => {
                 className={`text-heading-color hover:text-heading-color group-hover:text-yellow transitions text-nowrap ${
                   location.pathname === element.path && "text-yellow"
                 }`}
+                onClick={() => window.scrollTo({ top: 0 })}
               >
                 {element.title}
               </Link>
