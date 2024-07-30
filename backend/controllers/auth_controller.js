@@ -13,14 +13,7 @@ cloudinary.config({
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const image = req.file ? req.file.path : null;
-
-    console.log("Request body:", req.body);
-    console.log("Uploaded file:", req.file);
-
-    if (!image) {
-      return res.status(400).json({ message: "Please select image" });
-    }
+    const image = req?.file?.path;
 
     // Upload image to Cloudinary
     const result = await cloudinary.uploader.upload(image);
@@ -32,18 +25,8 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // if password is less than 8
-    if (password.length < 8) {
-      return res
-        .status(400)
-        .json({ message: "Password must be at least 8 characters long" });
-    }
-
     // Creating user
-    const user = await User.create(
-      { name, email, password, image: imageUrl },
-      { password: 0 }
-    );
+    const user = await User.create({ name, email, password, image: imageUrl });
     console.log(user);
     return res.status(200).json({
       message: "User registered successfully",
@@ -52,7 +35,9 @@ const register = async (req, res) => {
     });
   } catch (error) {
     console.error("Error while registering user", error);
-    return res.status(400).json({ message: "Error while registering user" });
+    return res
+      .status(400)
+      .json({ message: "Error while registering user", Error: error });
   }
 };
 

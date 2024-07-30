@@ -30,6 +30,8 @@ const Signup = () => {
   const submitData = async (data) => {
     setLoading(true);
 
+    console.log(data);
+
     try {
       const formData = new FormData();
       formData.append("name", data.name);
@@ -37,11 +39,18 @@ const Signup = () => {
       formData.append("password", data.password);
       formData.append("image", data.image[0]);
 
-      const response = await registerUser(formData).unwrap();
+      const response = await registerUser(formData)
+        .unwrap()
+        .then((response) => {
+          toast.success(response?.message);
+          reset();
+          dispatch(storeToken(response.token));
 
-      toast.success(response.message);
-      dispatch(storeToken(response.token));
-      navigate("/");
+          navigate("/");
+        })
+        .catch((err) => {
+          toast.error(err?.data?.message);
+        });
     } catch (error) {
       toast.error(error?.data?.message || error?.message);
       console.log("Registration Error:", error);
@@ -118,7 +127,13 @@ const Signup = () => {
                 name="password"
                 {...register("password", {
                   required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters long",
+                  },
                 })}
+                onFocus={(e) => (e.target.type = "text")}
+                onBlur={(e) => (e.target.type = "password")}
               />
             </div>
             {errors.password && (
